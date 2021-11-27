@@ -10,7 +10,7 @@ CREATE TABLE points_of_interest (
   map_id REFERENCES INTEGER maps(id) ON DELETE CASCADE
 );
 
-CREATE users_maps (
+CREATE TABLE users_maps (
   id SERIAL PRIMARY KEY NOT NULL,
   saved_from_map_id REFERENCES INTEGER maps(id) ON DELETE CASCADE,
   saved_to_user_id REFERENCES INTEGER users(id) ON DELETE CASCADE
