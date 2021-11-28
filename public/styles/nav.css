@@ -15,13 +15,13 @@ span {
     font-size: 16px;
 }
 
-#home:link {
+.nav-buttons:link {
   color: black;
   background-color: transparent;
   text-decoration: none;
 }
 
-span:visited {
+.nav-buttons:link:visited {
   color: black;
   background-color: transparent;
   text-decoration: none;
