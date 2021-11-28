@@ -1,0 +1,17 @@
+
+#navbar {
+  display: flex;
+  justify-content: space-between;
+   background-color: rgb(80, 80, 246);
+}
+
+span {
+  color: white;
+   font-family: Roboto;
+    font-size: 16px;
+}
+
+
+/* (Start here, increase/decrease this start point to liking, then alter it via em/vw/vmin/vmax depending on device/screen size)--> */
+/* <!--Note: anything with a trailing (?) is a decision I'm unsure on, feel free to alter any as needed, though target these ones with priority as they may be poor decisions on my part-->
+<!--Note: Login is purely placeholder right now, as well, all spans will be buttons once routes are fixed and working. Remember, NO FORMS, just use hardcoded users/templates for any areas where a form is needed--> */
