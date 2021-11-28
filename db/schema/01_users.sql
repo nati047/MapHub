@@ -1,7 +1,17 @@
 -- Drop and recreate Users table (Example)
 
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS collaborators CASCADE;
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE collaborators (
+  id SERIAL PRIMARY KEY NOT NULL,
+  collaborator_id REFERENCES INTEGER users(id) ON DELETE CASCADE,
+  map_id REFERENCES INTEGER maps(id) ON DELETE CASCADE
 );
