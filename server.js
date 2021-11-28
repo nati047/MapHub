@@ -56,6 +56,13 @@ app.get("/mapPage", (req, res) => {
   res.render("mapPage");
 });
 
+app.get("/sasquatchsightings", (req,res) => {
+  res.render("sasquatch_map");
+});
+app.get("/login", (req,res) => {
+  res.render("login");
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

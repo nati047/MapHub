@@ -2,21 +2,55 @@
 /* eslint-disable func-style */
 // Initialize and add the map
 // eslint-disable-next-line func-style
-function initMap() {
 
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  user: 'tobias',
+  password: 'password',
+  host: 'localhost',
+  database: 'midterm'
+});
+
+// const getMapLocationWithId = (id) => {
+//   const queryString = `SELECT latlng FROM maps WHERE id = $1;`;
+//   const queryParams = [id];
+//   return pool
+//     .query(queryString, queryParams)
+//     .then((result) => {
+//       console.log(result.rows);
+//       if (!result) {
+//         return null;
+//       } else {
+//         return result.rows[0];
+//       }
+//     })
+//     .catch((err) => console.error(err.message));
+// };
+// getMapLocationWithId(1);
+
+
+function initMap() {
   //CREATES MAP OBJECT ON PAGE LOAD
   const map = new google.maps.Map(document.getElementById("map"));
   //GETS USER LOCATION AND RENDERS MAP TO THAT LOCATION
-  navigator.geolocation.getCurrentPosition(function(position) {
-    // Center on user's current location if geolocation prompt allowed
-    let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    map.setCenter(initialLocation);
-    map.setZoom(8);
-  }, function(positionError) {
-    // User denied geolocation prompt - default to overview of world
-    map.setCenter(new google.maps.LatLng(0, 0));
-    map.setZoom(2);
-  });
+  // Center on user's current location if geolocation prompt allowed
+  const getMapLocationWithId = (id) => {
+    const queryString = `SELECT latlng FROM maps WHERE id = $1;`;
+    const queryParams = [id];
+    return pool
+      .query(queryString, queryParams)
+      .then((result) => {
+        let initialLocation = new google.maps.LatLng(result.rows);
+        map.setCenter(initialLocation);
+        map.setZoom(8);
+      })
+      .catch((err) => {
+        // User denied geolocation prompt - default to overview of world
+        map.setCenter(new google.maps.LatLng(0, 0));
+        map.setZoom(2);
+      });
+  };
 
   //ON CLICK CALLS PLACEMARKER WITH CLICK LOCATION ON MAP
   map.addListener('click', function(e) {
