@@ -6,7 +6,6 @@ function initMap() {
 
   //CREATES MAP OBJECT ON PAGE LOAD
   const map = new google.maps.Map(document.getElementById("map"));
-
   //GETS USER LOCATION AND RENDERS MAP TO THAT LOCATION
   navigator.geolocation.getCurrentPosition(function(position) {
     // Center on user's current location if geolocation prompt allowed
@@ -31,7 +30,7 @@ function initMap() {
       map: map
     });
     map.panTo(position);
-    //when a marker is placed adds a listener
+    //when a marker is placed adds a listener for a doubleclick which will then bring up the button's infowindow with an add content button inside
     marker.addListener('dblclick', function() {
       let infoWindow = new google.maps.InfoWindow({
         content: `<button>Add Content</button> `
