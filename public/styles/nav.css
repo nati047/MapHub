@@ -1,8 +1,12 @@
 
 #navbar {
   display: flex;
-  justify-content: space-between;
-   background-color: rgb(80, 80, 246);
+  justify-content: space-around;
+   background-color: rgb(33, 174, 221);
+   padding-left: 2%;
+   padding-right: 2%;
+   height: 30px;
+   align-items: center;
 }
 
 span {
