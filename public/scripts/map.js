@@ -1,49 +1,43 @@
+/* eslint-disable no-undef */
+/* eslint-disable func-style */
 // Initialize and add the map
 // eslint-disable-next-line func-style
 function initMap() {
 
+  //CREATES MAP OBJECT ON PAGE LOAD
   const map = new google.maps.Map(document.getElementById("map"));
 
+  //GETS USER LOCATION AND RENDERS MAP TO THAT LOCATION
   navigator.geolocation.getCurrentPosition(function(position) {
     // Center on user's current location if geolocation prompt allowed
     let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     map.setCenter(initialLocation);
-    map.setZoom(13);
+    map.setZoom(8);
   }, function(positionError) {
-    // User denied geolocation prompt - default to Chicago
-    map.setCenter(new google.maps.LatLng(39.8097343, -98.5556199));
-    map.setZoom(5);
+    // User denied geolocation prompt - default to overview of world
+    map.setCenter(new google.maps.LatLng(0, 0));
+    map.setZoom(2);
   });
 
-
-
-  // Add marker, positioned at Uluru - takes in an object with a position (lat -long) and what map we want it on
-  // const marker = new google.maps.Marker({
-  //   position: uluru,
-  //   map: map,
-  // });
-
-
-
-  let infoWindow = new google.maps.InfoWindow({
-    content: '<h1>ULURU</h1>'
-  });
-
-
-
+  //ON CLICK CALLS PLACEMARKER WITH CLICK LOCATION ON MAP
   map.addListener('click', function(e) {
     placeMarker(e.latLng, map);
   });
 
+  //PLACE MARKER FUNCTION
   function placeMarker(position, map) {
     let marker = new google.maps.Marker({
       position: position,
       map: map
     });
     map.panTo(position);
-
+    //when a marker is placed adds a listener
     marker.addListener('dblclick', function() {
+      let infoWindow = new google.maps.InfoWindow({
+        content: `<button>Add Content</button> `
+      });
       infoWindow.open(map, marker);
+      console.log(infoWindow.content);
     });
   }
 
