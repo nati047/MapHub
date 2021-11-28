@@ -7,6 +7,7 @@
   <!-- EXTERNAL CSS -->
   <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
   <link rel="stylesheet" href="../public/styles/main.css" type="text/css"/>
+  <script src="https://kit.fontawesome.com/05d72d0c0c.js" crossorigin="anonymous"></script>
 
   <title>MapHub</title>
 </head>
@@ -25,22 +26,30 @@
         <div class="map_info">
         <header class="map title">
           <div class="title-and-pic">
-
           <div id="header">
-            <a href="http://localhost:8080/sasquatchsightings" id="logo"><h1>Sasquatch sightings</h1></a>
+            <a href="http://localhost:8080/sasquatchsightings" id="logo"><h1>Sasquatch sightings</h1></a> <i onclick="myFunction(this)" id="favorite" class="fas fa-heart"></i>
+
+<script>
+function myFunction(x) {
+  let color = "black"
+  function goldColor(){
+    document.getElementById("favorite").style.color="red"
+    color = "gold"
+  }
+  x.toggle(goldColor());
+  }
+
+</script>
            </div>
             </div>
             <h3 class="username">Created By: SasLover</h3>
           </header>
           <h5 class="content">A map to see all sasquatch sightings in the Kentucky area (a known sas hotspot)</h5>
-          <footer class="date-and-time-icons">
-            <div class="icons">
-            <i id="heart" class="fas fa-heart"></i>
-          </div>
+
           </div>
           </div>
         </div>
-          </footer>
+
        </secion>
 
 
