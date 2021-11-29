@@ -106,14 +106,24 @@ app.get("/:id/users", (req,res) => {
 });
 
 app.get('/initmap', (req, res)=> {
-  db.query(`SELECT latitude, longitude
+  db.query(`SELECT maps.latitude, maps.longitude
   FROM maps
   WHERE creator_id = 1 `
   )
     .then(result => {
       console.log("query result", result.rows);
-      console.log(result.rows[0]);
       res.json(result.rows[0]);
+    });
+});
+
+app.get('/initmarkers', (req, res)=> {
+  db.query(`SELECT markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title
+  FROM markers
+  WHERE map_id = 1`
+  )
+    .then(result => {
+      console.log("query result", result.rows);
+      res.json(result.rows);
     });
 });
 
