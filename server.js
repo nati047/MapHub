@@ -1,13 +1,14 @@
 // load .env data into process.env
 require("dotenv").config();
 
+const location = require("./public/scripts/users_map");
 // Web server config
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-
+// const { coordsGetter } = require("./public/scripts/users_map")
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
@@ -70,23 +71,25 @@ app.get("/:id/users", (req,res) => {
   const userId = req.params.id;
   const templateVars = {id: userId}
   db.query(`
-    SELECT name FROM users WHERE id = ${userId}
-  `).then(result => {
-    console.log('query successful');
-  //   let val;
-  //  for(let obj of result.rows) {
-  //    console.log('obj is', obj)
-  //    if(obj.id === Number(userId)) {
-  //      val = obj;
-  //    }
-  //  }
+    SELECT users.name, latitude, longitude
+    FROM users
+    JOIN maps ON creator_id = users.id
+    WHERE users.id = 1
+
+  `)
+  .then(result => {
+    console.log('query successful', result.rows);
+    let coords = {lat: result.rows[0].latitude, lng: result.rows[0].longitude};
+    console.log("location is ---", location)
+    location.values.lat = coords.lat;
+    location.values.lng = coords.lng;
     templateVars.userName = result.rows[0].name;
-    console.log(templateVars)
+    // console.log(templateVars)
    res.render('users', templateVars);
   })
   .catch(err => {
     console.log('querry not successfull\n', err)
-  })
+})
 
 });
 

@@ -1,5 +1,7 @@
-const lat = 43.6532;
-const lng = -79.3832;
+let obj = {
+  lat: 0,
+  lng: 0
+}
 
   function initMap() {
 
@@ -14,5 +16,5 @@ const lng = -79.3832;
     });
   }
 
-
+exports.values = obj;
 
