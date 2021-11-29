@@ -1,8 +1,12 @@
 
 #navbar {
   display: flex;
-  justify-content: space-between;
-   background-color: rgb(80, 80, 246);
+  justify-content: space-around;
+   background-color: rgb(33, 174, 221);
+   padding-left: 2%;
+   padding-right: 2%;
+   height: 30px;
+   align-items: center;
 }
 
 span {
@@ -11,6 +15,17 @@ span {
     font-size: 16px;
 }
 
+.nav-buttons:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.nav-buttons:link:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
 
 /* (Start here, increase/decrease this start point to liking, then alter it via em/vw/vmin/vmax depending on device/screen size)--> */
 /* <!--Note: anything with a trailing (?) is a decision I'm unsure on, feel free to alter any as needed, though target these ones with priority as they may be poor decisions on my part-->

@@ -56,6 +56,40 @@ app.get("/mapPage", (req, res) => {
   res.render("mapPage");
 });
 
+app.get("/sasquatchsightings", (req,res) => {
+  res.render("sasquatch_map");
+});
+app.get("/login", (req,res) => {
+  res.render("login");
+});
+app.post("/login", (req,res) => { // redirects to home page for now
+  res.render("index");
+});
+
+app.get("/:id/users", (req,res) => {
+  const userId = req.params.id;
+  const templateVars = {id: userId}
+  db.query(`
+    SELECT name FROM users WHERE id = ${userId}
+  `).then(result => {
+    console.log('query successful');
+  //   let val;
+  //  for(let obj of result.rows) {
+  //    console.log('obj is', obj)
+  //    if(obj.id === Number(userId)) {
+  //      val = obj;
+  //    }
+  //  }
+    templateVars.userName = result.rows[0].name;
+    console.log(templateVars)
+   res.render('users', templateVars);
+  })
+  .catch(err => {
+    console.log('querry not successfull\n', err)
+  })
+
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
