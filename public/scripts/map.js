@@ -20,14 +20,14 @@ function initMap() {
 
   //ON CLICK CALLS PLACEMARKER WITH CLICK LOCATION ON MAP
   map.addListener('click', function(e) {
-    placeMarker(e.latLng, map);
+    placeMarker(e.latLng, map); //the placeMarker function takes in two parameters - the lat and lng of where the click was - and the map that it is being placed on
   });
 
   //PLACE MARKER FUNCTION
   function placeMarker(position, map) {
-    let marker = new google.maps.Marker({
-      position: position,
-      map: map
+    let marker = new google.maps.Marker({ //the marker itself takes in an object - that has a key value pair of the position and the map
+      position: position,                 //the position is set to the position passed in when clicked - and the map is passed in the map variable that we define
+      map: map                            //earlier on line 8
     });
     map.panTo(position);
     //when a marker is placed adds a listener for a doubleclick which will then bring up the button's infowindow with an add content button inside
