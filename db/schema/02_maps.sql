@@ -8,7 +8,8 @@ CREATE TABLE maps (
   name VARCHAR(255) NOT NULL,
   description TEXT DEFAULT 'Enter a description',
   image_url VARCHAR(255) DEFAULT 'Enter a url',
-  latlng VARCHAR(255)
+  latitude VARCHAR(255),
+  longitude VARCHAR(255)
 );
 
 CREATE TABLE points_of_interest (
