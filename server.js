@@ -112,6 +112,7 @@ app.get('/initmap', (req, res)=> {
   )
     .then(result => {
       console.log("query result", result.rows);
+      console.log(result.rows[0]);
       res.json(result.rows[0]);
     });
 });
