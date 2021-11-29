@@ -81,7 +81,7 @@ app.post("/login", (req,res) => { // redirects to home page for now
 
 app.get("/:id/users", (req,res) => {
   const userId = req.params.id;
-  const templateVars = {id: userId}
+  const templateVars = {id: userId};
   db.query(`
     SELECT users.username
     FROM users
@@ -89,19 +89,19 @@ app.get("/:id/users", (req,res) => {
     WHERE users.id = 1
 
   `)
-  .then(result => {
-    console.log('query successful', result.rows);
-    // let coords = {lat: result.rows[0].latitude, lng: result.rows[0].longitude};
-    // console.log("location is ---", location)
-    // location.values.lat = coords.lat;
-    // location.values.lng = coords.lng;
-    templateVars.userName = result.rows[0].username;
-    // console.log(templateVars)
-   res.render('users', templateVars);
-  })
-  .catch(err => {
-    console.log('querry not successfull\n', err)
-})
+    .then(result => {
+      console.log('query successful', result.rows);
+      // let coords = {lat: result.rows[0].latitude, lng: result.rows[0].longitude};
+      // console.log("location is ---", location)
+      // location.values.lat = coords.lat;
+      // location.values.lng = coords.lng;
+      templateVars.userName = result.rows[0].username;
+      // console.log(templateVars)
+      res.render('users', templateVars);
+    })
+    .catch(err => {
+      console.log('querry not successfull\n', err);
+    });
 
 });
 
@@ -109,12 +109,12 @@ app.get('/initmap', (req, res)=> {
   db.query(`SELECT latitude, longitude
   FROM maps
   WHERE creator_id = 1 `
-)
-.then(result => {
-  console.log("query result", result.rows)
-  res.json(result.rows[0])
+  )
+    .then(result => {
+      console.log("query result", result.rows);
+      res.json(result.rows[0]);
+    });
 });
-})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
