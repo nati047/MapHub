@@ -49,7 +49,18 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  res.render("index");
+  let templateVars = {};
+  db.query(`
+    SELECT * FROM maps
+  `).then(result => {
+    console.log('query successful');
+    templateVars.maps = result.rows;
+    console.log(templateVars);
+    res.render('index', templateVars);
+  })
+    .catch(err => {
+      console.log('querry not successfull\n', err);
+    });
 });
 
 app.get("/mapPage", (req, res) => {
@@ -68,25 +79,25 @@ app.post("/login", (req,res) => { // redirects to home page for now
 
 app.get("/:id/users", (req,res) => {
   const userId = req.params.id;
-  const templateVars = {id: userId}
+  const templateVars = {id: userId};
   db.query(`
     SELECT name FROM users WHERE id = ${userId}
   `).then(result => {
     console.log('query successful');
-  //   let val;
-  //  for(let obj of result.rows) {
-  //    console.log('obj is', obj)
-  //    if(obj.id === Number(userId)) {
-  //      val = obj;
-  //    }
-  //  }
+    //   let val;
+    //  for(let obj of result.rows) {
+    //    console.log('obj is', obj)
+    //    if(obj.id === Number(userId)) {
+    //      val = obj;
+    //    }
+    //  }
     templateVars.userName = result.rows[0].name;
-    console.log(templateVars)
-   res.render('users', templateVars);
+    console.log(templateVars);
+    res.render('users', templateVars);
   })
-  .catch(err => {
-    console.log('querry not successfull\n', err)
-  })
+    .catch(err => {
+      console.log('querry not successfull\n', err);
+    });
 
 });
 
