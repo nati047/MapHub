@@ -23,6 +23,8 @@
         <div id="title">
       <h2 class="Popular maps">Popular Maps</h2>
         </div>
+        <% for (let map of maps) { %>
+<div class="map-section">
 <div id="map_area">
       <div id="map">
       <section id="maps">
@@ -30,8 +32,8 @@
         <header class="map title">
           <div class="title-and-pic">
           <div id="header">
-            <a href="http://localhost:8080/sasquatchsightings" id="logo"><h1>Sasquatch sightings</h1></a> <i onclick="myFunction(this)" id="favorite" class="fas fa-heart"></i>
-
+            <a href="http://localhost:8080/sasquatchsightings" id="title"><h1><%= map.mapname %></h1></a> <i onclick="myFunction(this)" id="favorite" class="fas fa-heart"></i>
+          </div>
 <script>
 function myFunction(x) {
   let color = "black"
@@ -43,16 +45,20 @@ function myFunction(x) {
   }
 
 </script>
-           </div>
+<div id="map_image">
+<img class="picture" src="<%= map.image_url %>">  </img>
+</div>
+
             </div>
-            <h3 class="username">Created By: SasLover</h3>
+            <h3 class="username">Created By: <%= map.username%></h3>
           </header>
-          <h5 class="content">A map to see all sasquatch sightings in the Kentucky area (a known sas hotspot)</h5>
+          <h5 class="description"><%= map.description %> </h5>
 
           </div>
           </div>
         </div>
-
+      </div>
+<% } %>
        </secion>
 
 
