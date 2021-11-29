@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
+    <link rel="stylesheet" href="../public/styles/users.css">
+    <!-- <script src="../public/scripts/sasquatch_map.js"></script> -->
+    <script src="../public/scripts/users_map.js"></script>
+  </head>
+  <body>
+    <nav id="navbar"><span><a class="nav-buttons" href="http://localhost:8080/">Home</a></span>
+
+          <span><a class="nav-buttons"
+          href="http://localhost:8080/mapPage">Create a Map</a></span>
+
+    </nav>
+    <div class="profile">
+
+      <div class="favorites_contr">
+        <h1>Favorites List</h1>
+        <table>
+          <tr>
+            <th>Map Name</th>
+          </tr>
+          <tr>
+            <td>Map name from database</td>
+          </tr>
+
+          <tr>
+            <td> Food</td>
+           </tr>
+           <tr>
+            <td> Sports</td>
+           </tr>
+        </table>
+        <h1>Contributed to list</h1>
+        <table>
+          <tr>
+            <th>Map Name</th>
+          </tr>
+          <tr>
+            <td>Map names from database</td>
+          </tr>
+
+          <tr>
+            <td> map1</td>
+           </tr>
+           <tr>
+            <td> map2</td>
+           </tr>
+        </table>
+      </div>
+
+      <div class="map_container">
+        <h1>Maps of: <%= userName %></h1>
+        <div id="map" style="width: 400px; height: 400px;"></div>
+      </div>
+
+    </div>
+  </body>
+
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCs4aGT4j4CLuRIuG5t-F57amlmtRzTWtI&callback=initMap&libraries=&v=weekly"
+    async
+  ></script>
+
+</html>
