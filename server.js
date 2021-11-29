@@ -51,7 +51,8 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.get("/", (req, res) => {
   let templateVars = {};
   db.query(`
-    SELECT * FROM maps
+    SELECT maps.*, users.username FROM maps
+    JOIN users ON users.id = maps.creator_id;
   `).then(result => {
     console.log('query successful');
     templateVars.maps = result.rows;
