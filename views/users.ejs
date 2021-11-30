@@ -32,17 +32,12 @@
         <table>
           <tr>
             <th>Map Name</th>
+            <% for (let map of collaboratedMaps) { %>
           </tr>
           <tr>
-            <td>Map names from database</td>
+            <td><%= map.collaborated_maps%></td>
           </tr>
-
-          <tr>
-            <td> map1</td>
-           </tr>
-           <tr>
-            <td> map2</td>
-           </tr>
+          <% } %>
         </table>
       </div>
 

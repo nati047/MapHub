@@ -100,9 +100,15 @@ app.get("/:id/users", (req,res) => {
           console.log('second query', result.rows);
           templateVars.favouriteMaps = result.rows;
           console.log('templateVars after second query',templateVars);
-
-          res.render('users', templateVars);
-
+          db.query(` SELECT maps.mapname as collaborated_maps
+      FROM maps
+      JOIN collaborated ON maps.id = map_id
+      WHERE user_id = 1;`)
+            .then(result => {
+              templateVars.collaboratedMaps = result.rows;
+              console.log('templatevars after third', templateVars);
+              res.render('users', templateVars);
+            });
         });
     })
     .catch(err => {
