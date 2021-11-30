@@ -71,7 +71,7 @@ function initMap() {
 
 //   const queryString = `INSERT INTO markers (latitude, longitude) VALUES ($1, $2) RETURNING *;`;
 //   const values = [location.latitude, location.longitude];
-//   return pool 
+//   return pool
 //     .query(queryString, values)
 //     .then((result) => {
 //       return result.rows[0];
