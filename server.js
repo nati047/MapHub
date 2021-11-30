@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // load .env data into process.env
 require("dotenv").config();
 
@@ -55,9 +56,9 @@ app.get("/", (req, res) => {
     SELECT maps.*, users.username FROM maps
     JOIN users ON users.id = maps.creator_id;
   `).then(result => {
-    console.log('query successful');
+    // console.log('query successful');
     templateVars.maps = result.rows;
-    console.log(templateVars);
+    // console.log(templateVars);
     res.render('index', templateVars);
   })
     .catch(err => {
@@ -129,6 +130,31 @@ app.get('/initmap', (req, res)=> {
       res.json(result.rows);
     });
 });
+
+// END POINT TO GET THE ID OF THE MAP USING IT'S NAME AND THEN INSERTS IT INTO THE USER'S FAVOURITES
+app.get('/:id/addToFavourites', (req,res) => {
+  let element = req.params.id;
+  console.log(element);
+  db.query(`SELECT id FROM maps
+  WHERE mapname = $1`, [element])
+    .then(result => {
+      console.log("query result", result.rows[0].id);
+      let map_id = result.rows[0].id;
+      db.query(`
+      DELETE FROM favourites
+      WHERE saved_to_user_id = 1 AND saved_from_map_id = $1;
+      `, [result.rows[0].id])
+        .then(result => {
+          db.query(`INSERT INTO favourites (saved_to_user_id, saved_from_map_id)
+        VALUES (1, $1);`,[map_id]);
+        });
+      res.json(result.rows);
+    })
+    .catch(err =>{
+      console.log('query failed - you already have this map in your favourites',err);
+    });
+});
+
 
 app.get('/login/:id', (req, res) => {
   const userId = req.params.id;
