@@ -3,12 +3,12 @@
 
 const { Pool } = require('pg');
 
-const pool = new Pool({
-  user: 'tobias',
-  password: 'password',
-  host: 'localhost',
-  database: 'midterm'
-});
+// const pool = new Pool({
+//   user: 'tobias',
+//   password: 'password',
+//   host: 'localhost',
+//   database: 'midterm'
+// });
 
 // This function makes a fetch request to our route that makes a query
 // to the database which returns the selected maps coordinates and passes taht in to create the map
@@ -33,14 +33,41 @@ function initMap() {
           });
           marker.addListener('dblclick', function() {
             let infoWindow = new google.maps.InfoWindow({
-              content: element.title
+              content: element.title //maybe change this to `${element.title}\n${element.description}`
             });
             infoWindow.open(map, marker);
             console.log(infoWindow.content);
           });
           //gmarkers.push(marker);
-
+          google.maps.event.addListener(map, 'click', function(event) {
+            addMarker(event.LatLng)
+          })
         });
+
+        // function addMarker(location) {
+        //   let marker = new google.maps.Marker({
+        //       position: location,
+        //       map: map
+        //   });
+        //   marker.addListener('dblclick', function() {
+        //     let infoWindow = new google.maps.InfoWindow({
+        //       content: element.title //maybe change this to `${element.title}\n${element.description}`
+        //     });
+        //     infoWindow.open(map, marker);
+        //     console.log(infoWindow.content);
+        //   });
+
+        //   const queryString = `INSERT INTO markers (latitude, longitude) VALUES ($1, $2) RETURNING *;`;
+        //   const values = [location.latitude, location.longitude];
+        //   return pool 
+        //     .query(queryString, values)
+        //     .then((result) => {
+        //       return result.rows[0];
+        //     })
+        //     .catch((err) => {
+        //       console.log(err.message);
+        //     })
+        // }
 
         // function deleteMarker(id, markers) {
         //   for (let marker of markers) {
