@@ -83,11 +83,10 @@ app.get("/:id/users", (req,res) => {
   const userId = req.params.id;
   const templateVars = {id: userId};
   db.query(`
-    SELECT users.username
+    SELECT users.username, maps.mapname as mapname
     FROM users
-
+    JOIN maps ON creator_id = users.id
     WHERE users.id = 1
-
   `)
     .then(result => {
       console.log('query successful', result.rows);
@@ -96,6 +95,7 @@ app.get("/:id/users", (req,res) => {
       // location.values.lat = coords.lat;
       // location.values.lng = coords.lng;
       templateVars.userName = result.rows[0].username;
+      templateVars.mapName = result.rows[0].mapname;
       // console.log(templateVars)
       res.render('users', templateVars);
     })
