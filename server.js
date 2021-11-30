@@ -90,13 +90,8 @@ app.get("/:id/users", (req,res) => {
   `)
     .then(result => {
       console.log('query successful', result.rows);
-      // let coords = {lat: result.rows[0].latitude, lng: result.rows[0].longitude};
-      // console.log("location is ---", location)
-      // location.values.lat = coords.lat;
-      // location.values.lng = coords.lng;
       templateVars.userName = result.rows[0].username;
       templateVars.mapName = result.rows[0].mapname;
-      // console.log(templateVars)
       res.render('users', templateVars);
     })
     .catch(err => {
