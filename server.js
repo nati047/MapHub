@@ -86,19 +86,31 @@ app.get("/:id/users", (req,res) => {
     SELECT users.username, maps.mapname as mapname
     FROM users
     JOIN maps ON creator_id = users.id
-    WHERE users.id = 1
+    WHERE users.id = 1;
   `)
     .then(result => {
       console.log('query successful', result.rows);
       templateVars.userName = result.rows[0].username;
       templateVars.mapName = result.rows[0].mapname;
-      res.render('users', templateVars);
+      db.query(`    SELECT maps.mapname as favourite_maps
+      FROM maps
+      JOIN favourites ON maps.id = saved_from_map_id
+      WHERE saved_to_user_id = 1;`)
+        .then(result => {
+          console.log('second query', result.rows);
+          templateVars.favouriteMaps = result.rows;
+          console.log('templateVars after second query',templateVars);
+
+          res.render('users', templateVars);
+
+        });
     })
     .catch(err => {
       console.log('querry not successfull\n', err);
     });
-
 });
+
+
 
 app.get('/initmap', (req, res)=> {
   db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title
@@ -107,7 +119,7 @@ app.get('/initmap', (req, res)=> {
   WHERE creator_id = 1 `
   )
     .then(result => {
-      console.log("query result", result.rows);
+      // console.log("query result", result.rows);
       res.json(result.rows);
     });
 });
