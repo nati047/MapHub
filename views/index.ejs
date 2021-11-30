@@ -32,7 +32,7 @@
         <header class="map title">
           <div class="title-and-pic">
           <div id="header">
-            <a href="http://localhost:8080/sasquatchsightings" id="title"><h1><%= map.mapname %></h1></a> <i onclick="myFunction(this)" id="favorite" class="fas fa-heart"></i>
+            <a href="http://localhost:8080/selected_map/<%= map.id %>" id="title"><h1><%= map.mapname %></h1></a> <i onclick="myFunction(this)" id="favorite" class="fas fa-heart"></i>
           </div>
 <script>
 function myFunction(x) {
@@ -42,7 +42,7 @@ function myFunction(x) {
     color = "gold"
   }
   x.toggle(goldColor());
-  }
+}
 
 </script>
 <div id="map_image">
