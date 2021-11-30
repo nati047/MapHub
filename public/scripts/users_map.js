@@ -30,10 +30,11 @@ function initMap() {
           let marker = new google.maps.Marker({
             position: new google.maps.LatLng(element.marker_lat, element.marker_long),
             map:map
+            //should add the id of the marker from the database as a property for referencing, such as the delete button in the next comment
           });
           marker.addListener('dblclick', function() {
             let infoWindow = new google.maps.InfoWindow({
-              content: element.title //maybe change this to `${element.title}\n${element.description}`
+              content: element.title // + '\n<button id="deleteButton" data-id="' + marker.id + '">Delete</button>'     //maybe change this to `${element.title}\n${element.description}`
             });
             infoWindow.open(map, marker);
             console.log(infoWindow.content);
