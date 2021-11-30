@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- EXTERNAL CSS -->
+  <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
+  <link rel="stylesheet" href="../public/styles/create_map.css" type="text/css"/>
+  <script src="https://kit.fontawesome.com/05d72d0c0c.js" crossorigin="anonymous"></script>
+
+
+  <title>Create map</title>
+</head>
+
+<body>
+  <nav id="navbar"><span><a class="nav-buttons" href="http://localhost:8080/">Home</a></span>
+    <span><a class="nav-buttons"
+        href="http://localhost:8080/id/users">My Maps</a></span>
+  </nav>
+  <form id="new_map_form" action="/id/create" method="POST" >
+    <label for="name">Map Name:</label>
+    <input type="text" name="name" placeholder="map name"><br><br>
+    <label for="description">Description:</label>
+    <input type="text" name="description" placeholder="what's in this map?" ><br><br>
+
+    <label for="image_url">Image_url: </label>
+    <input type="text" name="image_url" placeholder="blabla.bla/something/otherthing"><br><br>
+    <label for="latitude" >Latitude:</label>
+    <input type="text" name="latitude" placeholder="eg.43.6532"><br><br>
+    <label for="latitude" >longitude:</label>
+    <input type="text" name="longitude" placeholder="eg.-79.3832"><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+</body>
+</html>
