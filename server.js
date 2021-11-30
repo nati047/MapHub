@@ -127,6 +127,33 @@ app.get('/initmarkers', (req, res)=> {
     });
 });
 
+app.get('/login/:id', (req, res) => {
+  const userId = req.params.id
+  res.redirect(`/${userId}/users`)
+});
+
+app.get('/:id/create', (req, res) => { // render a map create page
+  res.render('create_map')
+});
+
+app.post('/:id/create', (req, res) => { // takes user inputs and adds a new map to the maps database
+  console.log('request body ****************\n', req.body);
+  db.query(`
+  INSERT INTO maps (creator_id, mapname, description, image_url, latitude, longitude)
+  VALUES (1, $1 , $2 , $3 , $4, $5)
+  `, [req.body.name, req.body.description, req.body.image_url, req.body.latitude, req.body.longitude])
+  .then(result =>{
+    console.log('done')
+    res.redirect('/')
+  })
+  .catch(err =>{
+    console.log('query failed',err)
+  });
+
+
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

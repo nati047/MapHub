@@ -12,19 +12,21 @@ function initMap() {
     .then(response => response.json())
     .then(data => {
       const map = new google.maps.Map(document.getElementById("map"));
-      navigator.geolocation.getCurrentPosition(function(position) {
+      navigator.geolocation.getCurrentPosition(function (position) {
         let initialLocation = new google.maps.LatLng(data.latitude, data.longitude);
         map.setCenter(initialLocation);
         map.setZoom(10);
+
         fetch('http://localhost:8080/initmarkers')
           .then(response => response.json())
           .then(data => {
+            console.log('datais ---', data)
             data.forEach((element) => {
               let marker = new google.maps.Marker({
                 position: new google.maps.LatLng(element.marker_lat, element.marker_long),
-                map:map
+                map: map
               });
-              marker.addListener('dblclick', function() {
+              marker.addListener('dblclick', function () {
                 let infoWindow = new google.maps.InfoWindow({
                   content: element.title
                 });
@@ -38,22 +40,24 @@ function initMap() {
       });
     });
 
-}
 
-    let infowindow = new google.maps.InfoWindow();
-    let marker, i;
+};
+  // let infowindow = new google.maps.InfoWindow();
+  // let marker, i;
 
-    for (i = 0; i < response.rows.length; i++) {  // Loop through pool.query response, should be rows containing columns from markers/POIs table
-      marker = new google.maps.Marker({ //Create a new marker object each time
-        position: new google.maps.LatLng(response.rows[i].latitude, response.rows[i].longitude), //Create at the current markers lat and lng
-        map: map
-      });
-      google.maps.event.addListener(marker, 'click', (function(marker, i) { //On click, marker brings up an info window
-        return function() {
-          infowindow.setContent(response.rows[i].title); //Content of the info window should contain the name of the marker at the current row
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-    }
+  // for (i = 0; i < response.rows.length; i++) {  // Loop through pool.query response, should be rows containing columns from markers/POIs table
+  //   marker = new google.maps.Marker({ //Create a new marker object each time
+  //     position: new google.maps.LatLng(response.rows[i].latitude, response.rows[i].longitude), //Create at the current markers lat and lng
+  //     map: map
+  //   });
+  //   google.maps.event.addListener(marker, 'click', (function (marker, i) { //On click, marker brings up an info window
+  //     return function () {
+  //       infowindow.setContent(response.rows[i].title); //Content of the info window should contain the name of the marker at the current row
+  //       infowindow.open(map, marker);
+  //     }
+  //   })(marker, i));
+  // }
+
+
 
 
