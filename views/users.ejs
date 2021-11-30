@@ -21,33 +21,23 @@
         <table>
           <tr>
             <th>Map Name</th>
+            <% for (let map of favouriteMaps) { %>
           </tr>
           <tr>
-            <td>Map name from database</td>
+            <td><%= map.favourite_maps%></td>
           </tr>
-
-          <tr>
-            <td> Food</td>
-           </tr>
-           <tr>
-            <td> Sports</td>
-           </tr>
+          <% } %>
         </table>
         <h1>Contributed to list</h1>
         <table>
           <tr>
             <th>Map Name</th>
+            <% for (let map of collaboratedMaps) { %>
           </tr>
           <tr>
-            <td>Map names from database</td>
+            <td><%= map.collaborated_maps%></td>
           </tr>
-
-          <tr>
-            <td> map1</td>
-           </tr>
-           <tr>
-            <td> map2</td>
-           </tr>
+          <% } %>
         </table>
       </div>
 

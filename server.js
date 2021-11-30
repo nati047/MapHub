@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // load .env data into process.env
 require("dotenv").config();
 
@@ -58,9 +59,9 @@ app.get("/", (req, res) => {
     SELECT maps.*, users.username FROM maps
     JOIN users ON users.id = maps.creator_id;
   `).then(result => {
-    console.log('query successful');
+    // console.log('query successful');
     templateVars.maps = result.rows;
-    console.log(templateVars);
+    // console.log(templateVars);
     res.render('index', templateVars);
   })
     .catch(err => {
@@ -89,19 +90,37 @@ app.get("/:id/users", (req,res) => {
     SELECT users.username, maps.mapname as mapname
     FROM users
     JOIN maps ON creator_id = users.id
-    WHERE users.id = 1
+    WHERE users.id = 1;
   `)
     .then(result => {
       console.log('query successful', result.rows);
       templateVars.userName = result.rows[0].username;
       templateVars.mapName = result.rows[0].mapname;
-      res.render('users', templateVars);
+      db.query(`    SELECT maps.mapname as favourite_maps
+      FROM maps
+      JOIN favourites ON maps.id = saved_from_map_id
+      WHERE saved_to_user_id = 1;`)
+        .then(result => {
+          console.log('second query', result.rows);
+          templateVars.favouriteMaps = result.rows;
+          console.log('templateVars after second query',templateVars);
+          db.query(` SELECT maps.mapname as collaborated_maps
+      FROM maps
+      JOIN collaborated ON maps.id = map_id
+      WHERE user_id = 1;`)
+            .then(result => {
+              templateVars.collaboratedMaps = result.rows;
+              console.log('templatevars after third', templateVars);
+              res.render('users', templateVars);
+            });
+        });
     })
     .catch(err => {
       console.log('querry not successfull\n', err);
     });
-
 });
+
+
 
 app.get('/initmap', (req, res)=> {
   db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title
@@ -110,7 +129,7 @@ app.get('/initmap', (req, res)=> {
   WHERE creator_id = 1 `
   )
     .then(result => {
-      console.log("query result", result.rows);
+      // console.log("query result", result.rows);
       res.json(result.rows);
     });
 });
@@ -127,6 +146,31 @@ app.get('/initmap/:id', (req, res)=> {
       res.json(result.rows);
     });
 });
+
+// END POINT TO GET THE ID OF THE MAP USING IT'S NAME AND THEN INSERTS IT INTO THE USER'S FAVOURITES
+app.get('/:id/addToFavourites', (req,res) => {
+  let element = req.params.id;
+  console.log(element);
+  db.query(`SELECT id FROM maps
+  WHERE mapname = $1`, [element])
+    .then(result => {
+      console.log("query result", result.rows[0].id);
+      let map_id = result.rows[0].id;
+      db.query(`
+      DELETE FROM favourites
+      WHERE saved_to_user_id = 1 AND saved_from_map_id = $1;
+      `, [result.rows[0].id])
+        .then(result => {
+          db.query(`INSERT INTO favourites (saved_to_user_id, saved_from_map_id)
+        VALUES (1, $1);`,[map_id]);
+        });
+      res.json(result.rows);
+    })
+    .catch(err =>{
+      console.log('query failed - you already have this map in your favourites',err);
+    });
+});
+
 
 app.get('/login/:id', (req, res) => {
   const userId = req.params.id;
