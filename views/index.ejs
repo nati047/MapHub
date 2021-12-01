@@ -1,82 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- EXTERNAL CSS -->
-  <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
-  <link rel="stylesheet" href="../public/styles/main.css" type="text/css"/>
+  <link rel="stylesheet" href="../public/styles/layout.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/> -->
+  <link rel="stylesheet" href="../public/styles/main.css" type="text/css" />
   <script src="https://kit.fontawesome.com/05d72d0c0c.js" crossorigin="anonymous"></script>
   <script src="../public/scripts/addToFavourites.js"></script>
-  <script src=
-"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-    </script>
-    <style>
-      .btn {
-          color: black;
-      }
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+  </script>
+  <style>
+    .btn {
+      color: black;
+    }
 
-      #append {
-          padding: 5px 15px;
-      }
+    #append {
+      padding: 5px 15px;
+    }
   </style>
 
   <title>MapHub</title>
 </head>
-<nav id="navbar"><span><a class="nav-buttons" href="http://localhost:8080/">Home</a></span><span><a class="nav-buttons"
-      href="http://localhost:8080/id/users">My Maps</a></span><span><a class="nav-buttons"
-      href="http://localhost:8080/id/create">Create a Map</a></span><span><a class="nav-buttons"
-      href="http://localhost:8080/Login">Login</a></span></nav>
+<nav id="navbar">
+  <span><a class="nav-buttons" id="home" href="http://localhost:8080/">mapHub</a></span>
+  <span><a class="nav-buttons" href="http://localhost:8080/id/users">My Maps</a></span>
+  <span><a class="nav-buttons" href="http://localhost:8080/id/create">Create a Map</a></span>
+  <span><a class="nav-buttons" href="http://localhost:8080/Login">Login</a></span>
+</nav>
 
 <body>
 
+  <div class="main-container">
+    <div class="side-bar">
+      <h2>side-bar</h2>
+    </div>
 
-
-        <div id="title">
+    <div class="main-content">
+     <div id="title">
       <h2 class="Popular maps">Popular Maps</h2>
-        </div>
-        <% for (let map of maps) { %>
-          <% let idVar = 0 %>
-<div class="map-section">
-<div id="map_area">
-      <div id="map">
-      <section id="maps">
-        <div class="map_info">
-        <header class="map title">
-          <div class="title-and-pic">
-          <div id="header">
-            <a href="http://localhost:8080/selected_map/<%= map.id %>" class="map_name" id="title"><h1><%= map.mapname %></h1></a>
-            <div class="favourites_button">
-            <button id='<%=idVar%>'><i onclick="addToFavourites()" id="favorite" class="fas fa-heart"></i></button>
-          </div>
-          </div>
-          <script>
-            $(document).ready(function () {
-                $("button").click(function () {
-                    $("#<%=idVar%>").css({
-                        color: "red"
-                    });
-                });
-            });
-        </script>
+     </div>
+     <% for (let map of maps) { %>
+      <% let idVar=0 %>
+        <div class="map-section">
+          <div id="map_area">
+            <div id="map">
+              <section id="maps">
+                <div class="map_info">
+                  <header class="map_title">
+                    <div class="title-and-pic">
+                      <div id="header">
+                        <a href="http://localhost:8080/selected_map/<%= map.id %>" class="map_name" id="title">
+                          <h1>
+                            <%= map.mapname %>
+                          </h1>
+                        </a>
+                        <div class="favourites_button">
+                          <button id='<%=idVar%>'><i onclick="addToFavourites()" id="<%=idVar%>"
+                              class="fas fa-heart"></i></button>
+                        </div>
+                      </div>
+                      <script>
+                        $(document).ready(function () {
+                          $("button").click(function () {
+                            $(idVar).css({
+                              color: "red"
+                            });
+                          });
+                        });
+                      </script>
 
-<div id="map_image">
-<img class="picture" src="<%= map.image_url %>">  </img>
-</div>
+                      <div id="map_image">
+                        <img class="picture" src="<%= map.image_url %>"> </img>
+                      </div>
 
+                    </div>
+                    <h3 class="username">Created By: <%= map.username%>
+                    </h3>
+                  </header>
+                  <h5 class="description">
+                    <%= map.description %>
+                  </h5>
+
+                </div>
+                </secion>
             </div>
-            <h3 class="username">Created By: <%= map.username%></h3>
-          </header>
-          <h5 class="description"><%= map.description %> </h5>
-
-          </div>
           </div>
         </div>
-      </div>
-<% idVar++ } %>
-       </secion>
+        <% idVar++ } %>
+  </div>
 
-
+</div>
 </body>
+
 </html>

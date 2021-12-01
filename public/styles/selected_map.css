@@ -7,7 +7,7 @@ body {
 
    background-color: rgb(33, 174, 221);
     padding-left: 2%;
-   /* padding-right: 2%; */
+
    height: 60px;
    justify-content: flex-start;
    align-items: center;
@@ -18,14 +18,13 @@ body {
   margin: 10px;
   text-decoration: none;
   color:rgb(247, 247, 245);
-
 }
 #home {
   font-family: cursive;
   font-size: 30px;
 }
 #home:hover {
-  font-size: 30px;
+  font-size:40px;
 }
 #map-section {
   /* border:crimson solid 2px; */

@@ -2,3 +2,33 @@ body,
 html {
   margin: 0;
 }
+#navbar {
+  display: flex;
+  justify-content: space-around;
+
+   background-color: rgb(33, 174, 221);
+    padding-left: 2%;
+
+   height: 60px;
+   justify-content: flex-start;
+   align-items: center;
+
+}
+.nav-buttons {
+  font-size:20px;
+  margin: 10px;
+  text-decoration: none;
+  color:rgb(247, 247, 245);
+
+}
+#home {
+  font-family: cursive;
+  font-size: 30px;
+  color: aliceblue;
+  margin-right: 10px;
+}
+span {
+  color: white;
+   font-family: Roboto;
+    font-size: 16px;
+}
