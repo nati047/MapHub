@@ -25,18 +25,17 @@ function initMap() {
         let initialLocation = new google.maps.LatLng(data[0].latitude, data[0].longitude);
         map.setCenter(initialLocation);
         map.setZoom(10);
-        //let gmarkers = [];
         data.forEach((element) => {
           let marker = new google.maps.Marker({
             position: new google.maps.LatLng(element.marker_lat, element.marker_long),
-            map:map
-            //should add the id of the marker from the database as a property for referencing, such as the delete button in the next comment
+            map:map,
+            id: element.id
           });
           marker.addListener('dblclick', function() {
             let infoWindow = new google.maps.InfoWindow({
-              // title: element.title,
               content: `
               <div class='marker_window'>
+              <div>${element.id}</div>
               <div><strong>${element.title}</strong></div>
               <div>${element.content}<div>
               <button id="deleteButton" data-id="' + marker.id + '">Delete</button>
@@ -53,8 +52,6 @@ function initMap() {
             infoWindow.open(map, marker);
             console.log(infoWindow.content);
           });
-          //gmarkers.push(marker);
-
         });
 
         // google.maps.event.addListener(map, 'click', function(event) {
