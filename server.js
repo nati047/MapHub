@@ -123,7 +123,7 @@ app.get("/:id/users", (req,res) => {
 
 
 app.get('/initmap', (req, res)=> {
-  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title
+  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as content
   FROM maps
   JOIN markers ON map_id = maps.id
   WHERE creator_id = 1 `
@@ -136,7 +136,7 @@ app.get('/initmap', (req, res)=> {
 
 app.get('/initmap/:id', (req, res)=> {
   const userId = req.params.id;
-  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title
+  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.id as marker_id
   FROM maps
   JOIN markers ON map_id = maps.id
   WHERE creator_id = 1 `
@@ -199,7 +199,7 @@ app.post('/:id/create', (req, res) => { // takes user inputs and adds a new map 
 });
 
 let mapId = 0;  // since the api callback can't take a parameter we need to grab mapid from request url
-                // store it in a global variable and pass the variable to another route
+// store it in a global variable and pass the variable to another route
 app.get('/selected_map/:id', (req, res) => {
   const templateVars = {map_id: req.params.id};
   mapId = req.params.id;
@@ -209,23 +209,23 @@ app.get('/selected_map/:id', (req, res) => {
 app.get('/getMapId', (req, res) => {
   console.log(mapId, 'map id is ******\n');
   res.json(mapId);
-})
+});
 
 app.get('/initmap2/:id', (req, res)=> {  // queries the databse for map information based on it's map id
   const map_id = req.params.id;
-  console.log("map id sent through fetch ", map_id)
+  console.log("map id sent through fetch ", map_id);
   db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title
   FROM maps
   LEFT JOIN markers ON map_id = maps.id
   WHERE maps.id = $1`, [map_id]
   )
-  .then(result => {
-    console.log("query result", result.rows);
-    res.json(result.rows);
-  })
-  .catch(err => {
-      console.log('query failed', err)
-  });
+    .then(result => {
+      console.log("query result", result.rows);
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.log('query failed', err);
+    });
 });
 
 app.listen(PORT, () => {

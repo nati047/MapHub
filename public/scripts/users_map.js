@@ -34,8 +34,22 @@ function initMap() {
           });
           marker.addListener('dblclick', function() {
             let infoWindow = new google.maps.InfoWindow({
-              content: element.title // + '\n<button id="deleteButton" data-id="' + marker.id + '">Delete</button>'     //maybe change this to `${element.title}\n${element.description}`
-            });
+              // title: element.title,
+              content: `
+              <div class='marker_window'>
+              <div><strong>${element.title}</strong></div>
+              <div>${element.content}<div>
+              <button id="deleteButton" data-id="' + marker.id + '">Delete</button>
+              </div>
+              <form action="/">
+  <label for="title">Title:</label><br>
+  <input type="text" id="title" name="title" placeholder="Input changes"><br>
+  <label for="description">Description:</label><br>
+  <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+            `});
             infoWindow.open(map, marker);
             console.log(infoWindow.content);
           });
