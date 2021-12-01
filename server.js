@@ -207,16 +207,16 @@ app.get('/selected_map/:id', (req, res) => {
   FROM maps
   WHERE maps.id = $1`, [ mapId ]
   )
-  .then(result => {
-    templateVars.mapName = result.rows[0].mapname;
-    templateVars.mapDescription = result.rows[0].description;
-    templateVars.imageUrl = result.rows[0].image_url;
-    console.log("templateVars", result.rows);
-    res.render('selected_map', templateVars);
-  })
-  .catch(err =>{
-    console.log('query failed\n', err);
-  });
+    .then(result => {
+      templateVars.mapName = result.rows[0].mapname;
+      templateVars.mapDescription = result.rows[0].description;
+      templateVars.imageUrl = result.rows[0].image_url;
+      console.log("templateVars", result.rows);
+      res.render('selected_map', templateVars);
+    })
+    .catch(err =>{
+      console.log('query failed\n', err);
+    });
 
 });
 

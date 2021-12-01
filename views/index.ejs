@@ -37,6 +37,7 @@
       <h2 class="Popular maps">Popular Maps</h2>
         </div>
         <% for (let map of maps) { %>
+          <% let idVar = 0 %>
 <div class="map-section">
 <div id="map_area">
       <div id="map">
@@ -47,13 +48,13 @@
           <div id="header">
             <a href="http://localhost:8080/selected_map/<%= map.id %>" class="map_name" id="title"><h1><%= map.mapname %></h1></a>
             <div class="favourites_button">
-            <button class="btn"><i onclick="addToFavourites()" id="favorite" class="fas fa-heart"></i></button>
+            <button id='<%=idVar%>'><i onclick="addToFavourites()" id="favorite" class="fas fa-heart"></i></button>
           </div>
           </div>
           <script>
             $(document).ready(function () {
                 $("button").click(function () {
-                    $(".btn").css({
+                    $("#<%=idVar%>").css({
                         color: "red"
                     });
                 });
@@ -73,7 +74,7 @@
           </div>
         </div>
       </div>
-<% } %>
+<% idVar++ } %>
        </secion>
 
 
