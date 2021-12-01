@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+}
+#navbar {
+  display: flex;
+  justify-content: space-around;
+
+   background-color: rgb(33, 174, 221);
+    padding-left: 2%;
+   /* padding-right: 2%; */
+   height: 60px;
+   justify-content: flex-start;
+   align-items: center;
+
+}
+.nav-buttons {
+  font-size:25px;
+  margin: 10px;
+  text-decoration: none;
+  color:rgb(247, 247, 245);
+
+}
+#home {
+  font-family: cursive;
+  font-size: 30px;
+}
+#home:hover {
+  font-size: 30px;
+}
+#map-section {
+  /* border:crimson solid 2px; */
+  display:flex;
+  justify-content: space-between;
+
+}
+#map {
+
+  height: 700px;
+  width: 75%;
+  margin-right: 30px;
+}
+#map-description {
+  /* border:blue solid 2px; */
+
+  width: 25%;
+  background-color: rgb(247, 247, 245);
+  box-shadow: 0 0px 10px black;
+  padding-left: 10px;
+}
+#map-image {
+  object-fit: contain;
+    width: 90%;
+}
+

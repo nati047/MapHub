@@ -2,10 +2,12 @@
 #navbar {
   display: flex;
   justify-content: space-around;
+  /* padding: 10px; */
    background-color: rgb(33, 174, 221);
    padding-left: 2%;
    padding-right: 2%;
-   height: 30px;
+   height: 60px;
+   justify-content: flex-start;
    align-items: center;
 }
 
@@ -14,7 +16,9 @@ span {
    font-family: Roboto;
     font-size: 16px;
 }
-
+#home {
+  font-family: cursive;
+}
 .nav-buttons:link {
   color: black;
   background-color: transparent;
