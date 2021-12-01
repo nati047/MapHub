@@ -10,9 +10,7 @@
     .selected {
       color:red;
       }
-    .not-selected {
-      color: black;
-      }
+
   /* Resize images */
   .container img {
       width: 10%;
