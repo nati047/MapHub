@@ -12,5 +12,6 @@ function addToFavourites(element) {
     .then(response => response.json())
     .then(data => {
       console.log('data', data);
+      alert(`Added ${element} to your favourites!`);
     });
 }
