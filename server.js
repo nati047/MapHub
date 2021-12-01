@@ -203,7 +203,21 @@ let mapId = 0;  // since the api callback can't take a parameter we need to grab
 app.get('/selected_map/:id', (req, res) => {
   const templateVars = {map_id: req.params.id};
   mapId = req.params.id;
-  res.render('selected_map', templateVars);
+  db.query(`SELECT *
+  FROM maps
+  WHERE maps.id = $1`, [ mapId ]
+  )
+  .then(result => {
+    templateVars.mapName = result.rows[0].mapname;
+    templateVars.mapDescription = result.rows[0].description;
+    templateVars.imageUrl = result.rows[0].image_url;
+    console.log("templateVars", result.rows);
+    res.render('selected_map', templateVars);
+  })
+  .catch(err =>{
+    console.log('query failed\n', err);
+  });
+
 });
 
 app.get('/getMapId', (req, res) => {

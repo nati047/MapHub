@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
+    <!-- <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/> -->
+    <link rel="stylesheet" href="../public/styles/selected_map.css" type="text/css"/>
 
     <!-- <script src="../public/scripts/sasquatch_map.js"></script> -->
 
     <script src="../public/scripts/initmap2.js"></script>
   </head>
   <body>
-    <nav id="navbar"><span><a class="nav-buttons" href="http://localhost:8080/">Home</a></span>
+    <nav id="navbar"><span><a class="nav-buttons" id="home" href="http://localhost:8080/">mapHub</a></span>
 
-          <span><a class="nav-buttons"
-          href="http://localhost:8080/mapPage">Map</a></span>
+
 
     </nav>
+    <div id="map-section">
+      <div id="map-description">
+        <h1>
+         <%= mapName %>
+        </h1>
+        <h3>
+          <%= mapDescription %>
+        </h3>
+        <img src="<%= imageUrl%>" id="map-image">
+      </div>
 
-    <p>
-      map id  <%= map_id %>
-    </p>
-    <div id="map" style="height: 600px; width: 600px;"></div>
+      <div id="map"></div>
+    </div>
   </body>
 
     <script
