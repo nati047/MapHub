@@ -151,18 +151,19 @@ app.get('/initmap/:id', (req, res)=> {
 app.get('/:id/addToFavourites', (req,res) => {
   let element = req.params.id;
   console.log(element);
-  db.query(`SELECT id FROM maps
-  WHERE mapname = $1`, [element])
+  db.query(`SELECT id, mapname FROM maps
+  WHERE id = $1`, [element])
     .then(result => {
       console.log("query result", result.rows[0].id);
       let map_id = result.rows[0].id;
       db.query(`
       DELETE FROM favourites
       WHERE saved_to_user_id = 1 AND saved_from_map_id = $1;
-      `, [result.rows[0].id])
+      `, [map_id])
         .then(result => {
           db.query(`INSERT INTO favourites (saved_to_user_id, saved_from_map_id)
         VALUES (1, $1);`,[map_id]);
+          console.log('map_id:',map_id);
         });
       res.json(result.rows);
     })
@@ -170,7 +171,25 @@ app.get('/:id/addToFavourites', (req,res) => {
       console.log('query failed - you already have this map in your favourites',err);
     });
 });
-
+// END POINT TO REMOVE MAP FROM USER'S FAVOURITES
+app.get('/:id/removeFromFavourites', (req,res) => {
+  let element = req.params.id;
+  console.log(element);
+  db.query(`SELECT id, mapname FROM maps
+  WHERE id = $1`, [element])
+    .then(result => {
+      console.log("query result", result.rows[0].id);
+      let map_id = result.rows[0].id;
+      db.query(`
+      DELETE FROM favourites
+      WHERE saved_to_user_id = 1 AND saved_from_map_id = $1;
+      `, [map_id]);
+      res.json(result.rows);
+    })
+    .catch(err =>{
+      console.log('query failed',err);
+    });
+});
 
 app.get('/login/:id', (req, res) => {
   const userId = req.params.id;
