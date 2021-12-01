@@ -8,11 +8,10 @@
   <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
   <link rel="stylesheet" href="../public/styles/main.css" type="text/css"/>
   <script src="https://kit.fontawesome.com/05d72d0c0c.js" crossorigin="anonymous"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
   <script src="../public/scripts/addToFavourites.js"></script>
-  <script src=
-"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-    </script>
-    <style>
+   <style>
       .btn {
           color: black;
       }
@@ -31,13 +30,10 @@
 
 <body>
 
-
-
         <div id="title">
       <h2 class="Popular maps">Popular Maps</h2>
         </div>
         <% for (let map of maps) { %>
-          <% let idVar = 0 %>
 <div class="map-section">
 <div id="map_area">
       <div id="map">
@@ -48,18 +44,9 @@
           <div id="header">
             <a href="http://localhost:8080/selected_map/<%= map.id %>" class="map_name" id="title"><h1><%= map.mapname %></h1></a>
             <div class="favourites_button">
-            <button id='<%=idVar%>'><i onclick="addToFavourites()" id="favorite" class="fas fa-heart"></i></button>
+            <button id='<%=map.id%>'><i class="fas fa-heart"></i></button>
           </div>
           </div>
-          <script>
-            $(document).ready(function () {
-                $("button").click(function () {
-                    $("#<%=idVar%>").css({
-                        color: "red"
-                    });
-                });
-            });
-        </script>
 
 <div id="map_image">
 <img class="picture" src="<%= map.image_url %>">  </img>
@@ -74,7 +61,22 @@
           </div>
         </div>
       </div>
-<% idVar++ } %>
+<%  } %>
+
+<!-- <script>
+//   $(document).ready(function() {
+//   let elements = document.getElementsByClassName("favourites_button");
+//   console.log(elements);
+//   // for (let elem of elements) {
+//   //   elem.addEventListener("click", function() {
+//   //     // addToFavourites();
+//   //     alert("you clicked me");
+//   //   });
+//   // }
+
+// });
+
+</script> -->
        </secion>
 
 
