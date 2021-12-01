@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS maps CASCADE;
 DROP TABLE IF EXISTS points_of_interest CASCADE;
-DROP TABLE IF EXISTS favourite_maps CASCADE;
 
 CREATE TABLE maps (
   id SERIAL PRIMARY KEY NOT NULL,
@@ -20,10 +19,4 @@ CREATE TABLE points_of_interest (
   picture_url VARCHAR(255) DEFAULT 'Enter a url',
   latitude VARCHAR(255) NOT NULL,
   longitude VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE favourite_maps (
-  id SERIAL PRIMARY KEY NOT NULL,
-  saved_from_map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE,
-  saved_to_user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
