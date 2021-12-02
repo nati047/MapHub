@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- EXTERNAL CSS -->
-  <!-- <link rel="stylesheet" href="../public/styles/layout.css" type="text/css" /> -->
-  <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
+  <link rel="stylesheet" href="../public/styles/layout.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/> -->
   <link rel="stylesheet" href="../public/styles/main.css" type="text/css" />
   <script src="https://kit.fontawesome.com/05d72d0c0c.js" crossorigin="anonymous"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -26,23 +26,22 @@
   <title>MapHub</title>
 </head>
 
+<nav id="navbar">
+  <span><a class="nav-buttons" id="home" href="http://localhost:8080/">mapHub</a></span>
+  <span><a class="nav-buttons" href="http://localhost:8080/id/users">My Maps</a></span>
+  <span><a class="nav-buttons" href="http://localhost:8080/id/create">Create a Map</a></span>
+  <span><a class="nav-buttons" href="http://localhost:8080/Login">Login</a></span>
+</nav>
 
 <body>
-  <nav id="navbar">
-    <span><a class="nav-buttons" id="home" href="http://localhost:8080/">mapHub</a></span>
-    <span><a class="nav-buttons" href="http://localhost:8080/id/users">My Maps</a></span>
-    <span><a class="nav-buttons" href="http://localhost:8080/id/create">Create Map</a></span>
-    <span><a class="nav-buttons" href="http://localhost:8080/Login">Register</a></span>
-  </nav>
 
 
-<div class="content">
 
-  <div id="title">
-    <h1 class="Popular maps">Popular Maps</h1>
-  </div>
 
-  <% for (let map of maps) { %>
+    <div id="title">
+    <h2 class="Popular maps">Popular Maps</h2>
+   </div>
+   <% for (let map of maps) { %>
     <div class="map-section">
       <div id="map_area">
         <div id="map">
@@ -75,14 +74,18 @@
 
             </div>
 
-          </div>
         </div>
       </div>
-      <% } %>
     </div>
-  </secion>
-</div>
-</div>
+    </div>
+    <% } %>
+      </secion>
+    </div>
+
+
+
+
+</body>
 </body>
 
 </html>

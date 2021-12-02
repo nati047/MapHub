@@ -1,35 +1,42 @@
+body,
+html {
+  margin: 0;
+}
 
 #navbar {
   display: flex;
   justify-content: space-around;
-  /* padding: 10px; */
+
    background-color: rgb(33, 174, 221);
-   padding-left: 2%;
-   padding-right: 2%;
+    padding-left: 2%;
+
    height: 60px;
    justify-content: flex-start;
    align-items: center;
+  position: fixed;
+  width: 100%;
+  margin-top: 0px;
 }
+.nav-buttons {
+  font-size:20px;
+  margin: 10px;
+  text-decoration: none;
+  color:rgb(247, 247, 245);
 
+}
+#home {
+  font-family: cursive;
+  font-size: 35px;
+  color: aliceblue;
+  margin-right: 10px;
+}
 span {
   color: white;
    font-family: Roboto;
     font-size: 16px;
 }
-#home {
-  font-family: cursive;
-}
-.nav-buttons:link {
-  color: black;
-  background-color: transparent;
-  text-decoration: none;
-}
 
-.nav-buttons:link:visited {
-  color: black;
-  background-color: transparent;
-  text-decoration: none;
-}
+
 
 /* (Start here, increase/decrease this start point to liking, then alter it via em/vw/vmin/vmax depending on device/screen size)--> */
 /* <!--Note: anything with a trailing (?) is a decision I'm unsure on, feel free to alter any as needed, though target these ones with priority as they may be poor decisions on my part-->

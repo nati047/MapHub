@@ -1,53 +1,66 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link rel="stylesheet" href="../public/styles/nav.css" type="text/css"/>
     <link rel="stylesheet" href="../public/styles/users.css">
+    <link rel="stylesheet" href="../public/styles/layout.css">
     <!-- <script src="../public/scripts/sasquatch_map.js"></script> -->
 
     <script src="../public/scripts/users_map.js"></script>
   </head>
   <body>
-    <nav id="navbar"><span><a class="nav-buttons" href="http://localhost:8080/">Home</a></span>
-
-          <span><a class="nav-buttons"
-          href="http://localhost:8080/id/create">Create a Map</a></span>
-
+    <nav id="navbar"><span><a class="nav-buttons" id="home" href="http://localhost:8080/">mapHub</a></span>
+      <span><a class="nav-buttons" href="http://localhost:8080/id/users">My Maps</a></span>
+      <span><a class="nav-buttons" href="http://localhost:8080/id/create">Create Map</a></span>
     </nav>
+<div class="content">
     <div class="profile">
 
       <div class="favorites_contr">
-        <h1>Favorites List</h1>
-        <table>
+
+        <table class="table table-hover">
+          <thead class="thead-light">
           <tr>
-            <th>Map Name</th>
+            <th><h4>Favorites List</h4></th>
             <% for (let map of favouriteMaps) { %>
           </tr>
           <tr>
             <td><%= map.favourite_maps%></td>
           </tr>
           <% } %>
+          </thead>
         </table>
-        <h1>Contributed to list</h1>
-        <table>
+
+        <table table class="table table-hover">
+          <thead class="thead-light">
           <tr>
-            <th>Map Name</th>
+            <th><h4>Contributed to list</h4></th>
             <% for (let map of collaboratedMaps) { %>
           </tr>
           <tr>
             <td><%= map.collaborated_maps%></td>
           </tr>
           <% } %>
+          </thead>
         </table>
       </div>
 
       <div class="map_container">
         <h1><%= userName %>'s Most Popular Map:</h1>
         <h3><%= mapName %></h3>
-        <div id="map" style="width: 400px; height: 400px;"></div>
+        <div id="map" ></div>
       </div>
 
     </div>
+
+  </div>
+  <!-- Bootstrap js -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 
     <script
