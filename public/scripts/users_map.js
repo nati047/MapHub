@@ -1,15 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable func-style */
-// const { Pool } = require("pg");
-
-
-// const pool = new Pool({
-//   user: 'tobias',
-//   password: 'password',
-//   host: 'localhost',
-//   database: 'midterm'
-// });
 
 // This function makes a fetch request to our route that makes a query
 // to the database which returns the selected maps coordinates and passes taht in to create the map
