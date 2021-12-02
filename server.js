@@ -123,7 +123,7 @@ app.get("/:id/users", (req,res) => {
 
 
 app.get('/initmap', (req, res)=> {
-  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as content, markers.id as id
+  db.query(`SELECT maps.id as map_id, maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as content, markers.id as id
   FROM maps
   JOIN markers ON map_id = maps.id
   WHERE creator_id = 1 `
@@ -136,7 +136,7 @@ app.get('/initmap', (req, res)=> {
 
 app.get('/initmap/:id', (req, res)=> {
   const userId = req.params.id;
-  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.id as marker_id
+  db.query(`SELECT maps.id as map_id, maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.id as marker_id
   FROM maps
   JOIN markers ON map_id = maps.id
   WHERE creator_id = 1 `
@@ -261,11 +261,20 @@ app.get('/initmap2/:id', (req, res)=> {  // queries the databse for map informat
     });
 });
 
-// app.get('/:id/:id/addMarker', (req,res) => {
-//   const position = req.params.id;
-//   console.log('Position passed in fetch request',position);
-
-// });
+app.get('/:id/:map_id/addMarker', (req,res) => {
+  const positionOfMarker = req.params.id;
+  let removeParantheses = positionOfMarker.slice(1,-1);  //removes parantheses since the location gets passed in as a string with parantheses surrounding the lat and long
+  let latitude = removeParantheses.substring(0, removeParantheses.indexOf(',')); //grabs the latitude from the string
+  let longitude = removeParantheses.substring(removeParantheses.indexOf(',') + 2); //grabs the longitude from the string without the whitespace after the comma
+  const map_id = req.params.map_id;
+  console.log('passed in from fetch', latitude, longitude, map_id);
+  db.query(`INSERT INTO markers (map_id, latitude, longitude)
+            VALUES ($1, $2, $3)`, [map_id, latitude, longitude])
+    .then(result => {
+      console.log(result.rows);
+      console.log(`added marker to map with id of ${map_id} at latitude: ${latitude} and longitude: ${longitude}`);
+    });
+});
 
 app.get('/:id/deleteMarker', (req,res) => {
   const marker_id = req.params.id;
