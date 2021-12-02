@@ -267,11 +267,9 @@ app.get('/:id/:map_id/addMarker', (req,res) => {
   let latitude = removeParantheses.substring(0, removeParantheses.indexOf(',')); //grabs the latitude from the string
   let longitude = removeParantheses.substring(removeParantheses.indexOf(',') + 2); //grabs the longitude from the string without the whitespace after the comma
   const map_id = req.params.map_id;
-  console.log('passed in from fetch', latitude, longitude, map_id);
   db.query(`INSERT INTO markers (map_id, latitude, longitude)
             VALUES ($1, $2, $3)`, [map_id, latitude, longitude])
     .then(result => {
-      console.log(result.rows);
       console.log(`added marker to map with id of ${map_id} at latitude: ${latitude} and longitude: ${longitude}`);
     });
 });
@@ -283,6 +281,14 @@ app.get('/:id/deleteMarker', (req,res) => {
     .then(result => {
       console.log(`removed marker ${marker_id} from database`);
     });
+});
+
+app.get('/:id/:title/:description/editMarker', (req,res) => {
+  const marker_id = req.params.id;
+  const marker_title = req.params.title;
+  const marker_description = req.params.description;
+  console.log("Information sent through fetch", marker_id, marker_title, marker_description);
+  db.query(`UPDATE markers SET markername = $1, description = $2 WHERE id = $3 `, [marker_title, marker_description, marker_id]);
 });
 
 app.listen(PORT, () => {
