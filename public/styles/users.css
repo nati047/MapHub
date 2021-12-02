@@ -12,6 +12,7 @@
 .favorites_contr {
   border: 1px solid #BFBFBF;
   box-shadow: 5px 5px 5px #aaaaaa;
+  width: 30%;
 }
 .profile {
   display: flex;

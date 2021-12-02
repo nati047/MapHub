@@ -1,3 +1,8 @@
+:root {
+  --nav-bar-color:  rgb(33, 174, 221);
+  --nav-text-color: rgb(247, 247, 245);
+}
+
 body,
 html {
   margin: 0;
@@ -7,13 +12,14 @@ html {
   display: flex;
   justify-content: space-around;
 
-   background-color: rgb(33, 174, 221);
+   background-color: var(--nav-bar-color);
     padding-left: 2%;
 
    height: 60px;
    justify-content: flex-start;
    align-items: center;
   position: fixed;
+  top: 0px;
   width: 100%;
   margin-top: 0px;
 }
@@ -21,17 +27,16 @@ html {
   font-size:20px;
   margin: 10px;
   text-decoration: none;
-  color:rgb(247, 247, 245);
+  color:var(--nav-text-color);
 
 }
 #home {
   font-family: cursive;
   font-size: 35px;
-  color: aliceblue;
+  color: var(--nav-text-color);
   margin-right: 10px;
 }
 span {
-  color: white;
    font-family: Roboto;
     font-size: 16px;
 }

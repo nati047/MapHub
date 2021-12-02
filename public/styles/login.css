@@ -1,11 +1,5 @@
+.login_form {
+  padding-top: 60px;
+  margin-left: 20px;
+}
 
-a#home {
-  font-size: 25px;
-}
-html {
-  background: url('https://images.pexels.com/photos/1054222/pexels-photo-1054222.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
