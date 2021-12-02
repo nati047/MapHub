@@ -40,7 +40,6 @@ function initMap() {
               id: marker.id,
               content: `
               <div class='marker_window'>
-              <div>${element.id}</div>
               <div><strong>${element.title}</strong></div>
               <div>${element.content}<div>
               <div><p></p></div>
@@ -97,10 +96,9 @@ function addMarker(position, map) {
       map.panTo(position);
       marker.addListener('dblclick', function() {
         let infoWindow = new google.maps.InfoWindow({
-          id: newMarkerId,
+          id: gmarkers.length,
           content: `
       <div class='marker_window'>
-      <div>${newMarkerId}</div>
       <div><strong>New Marker</strong></div>
       <div></div>
       <div><p></p></div>
