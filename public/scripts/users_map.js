@@ -40,7 +40,6 @@ function initMap() {
               id: marker.id,
               content: `
               <div class='marker_window'>
-              <div>${element.id}</div>
               <div><strong>${element.title}</strong></div>
               <div>${element.content}<div>
               <div><p></p></div>
@@ -100,7 +99,6 @@ function addMarker(position, map) {
           id: newMarkerId,
           content: `
       <div class='marker_window'>
-      <div>${newMarkerId}</div>
       <div><strong>New Marker</strong></div>
       <div></div>
       <div><p></p></div>
@@ -158,7 +156,6 @@ function editMarker(window) {
   let description = document.getElementById('description').value;
   window.setContent(`
   <div class='marker_window'>
-  <div>${marker_id}</div>
   <div><strong>${title}</strong></div>
   <div>${description}<div>
   <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
