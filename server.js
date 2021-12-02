@@ -261,6 +261,21 @@ app.get('/initmap2/:id', (req, res)=> {  // queries the databse for map informat
     });
 });
 
+// app.get('/:id/:id/addMarker', (req,res) => {
+//   const position = req.params.id;
+//   console.log('Position passed in fetch request',position);
+
+// });
+
+app.get('/:id/deleteMarker', (req,res) => {
+  const marker_id = req.params.id;
+  console.log("map id sent through fetch", marker_id);
+  db.query(`DELETE FROM markers WHERE markers.id = $1`, [marker_id])
+    .then(result => {
+      console.log(`removed marker ${marker_id} from database`);
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

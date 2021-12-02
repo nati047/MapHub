@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable func-style */
-const { Pool } = require("pg");
+// const { Pool } = require("pg");
 
 // const pool = new Pool({
 //   user: 'tobias',
@@ -15,7 +16,7 @@ const { Pool } = require("pg");
 // and for each item in the returned array of objects we place the marker with the
 // unique coordinates and the title of each marker inside of the marker's info window
 
-//let gmarkers = [];
+let gmarkers = [];
 
 function initMap() {
   fetch('http://localhost:8080/initmap')
@@ -28,6 +29,7 @@ function initMap() {
         map.setZoom(10);
 
         data.forEach((element) => {
+          let counter = 0;
           let marker = new google.maps.Marker({
             position: new google.maps.LatLng(element.marker_lat, element.marker_long),
             map: map,
@@ -35,130 +37,162 @@ function initMap() {
           });
           marker.addListener('dblclick', function() {
             let infoWindow = new google.maps.InfoWindow({
+              id: marker.id,
               content: `
               <div class='marker_window'>
-              <div>${element.id}</div>
+              <div>${marker.id}</div>
               <div><strong>${element.title}</strong></div>
               <div>${element.content}<div>
-              <button id="deleteButton" data-id="' + marker.id + '">Delete</button>
+              <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
+              <button id="editButton" data-id="' + marker.id + '">EDIT</button>
+
               </div>
               <form>
               <label for="title">Title:</label><br>
               <input type="text" id="title" name="title" placeholder="Input changes"><br>
               <label for="description">Description:</label><br>
               <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
-              <input type="submit" id="submitButton" value="Submit">
               </form>`});
             infoWindow.open(map, marker);
-            console.log(infoWindow.content);
+            google.maps.event.addListener(infoWindow, 'domready', function() {
+              const someButton = document.getElementById('deleteButton');
+              someButton.addEventListener('click', function() {
+                deleteMarker(infoWindow.id);
+              });
+            });
+            google.maps.event.addListener(infoWindow, 'domready', function() {
+              const someButton = document.getElementById('editButton');
+              someButton.addEventListener('click', function() {
+                editMarker(infoWindow);
+              });
+            });
+
           });
-          //gmarkers.push(marker);
+          gmarkers.push(marker);
+        });
+        map.addListener('click', function(e) {
+          addMarker(e.latLng, map);
         });
 
-        // google.maps.event.addListener(map, 'click', function(event) {
-        //   addMarker(event.LatLng)
-        // })
 
-        // google.maps.event.addListener(infoWindow, 'domready', function() {
-        //    $("#deleteButton").click(function() {
-        //      deleteMarker($(this).data('id'));
-        //    });
-        //
         // });
 
         // google.maps.event.addListener(infoWindow, 'domready', function() {
         //   $("#submitButton").click(function() {
-        //      editMarker($(this).data('id'));
-        //    });
-        //
+        //     editMarker($(this).data('id'));
+        //   });
+
         // });
 
       });
     });
 }
 
-// function addMarker(location) {
-//   let marker = new google.maps.Marker({
-//       position: location,
-//       map: map
-//   });
-//   marker.addListener('dblclick', function() {
-//     let infoWindow =               content: `
-//      <div class='marker_window'>
-//      <div>${element.id}</div>
-//      <div><strong>${element.title}</strong></div>
-//      <div>${element.content}<div>
-//      <button id="deleteButton" data-id="' + marker.id + '">Delete</button>
-//      </div>
-//      <form>
-//      <label for="title">Title:</label><br>
-//      <input type="text" id="title" name="title" placeholder="Input changes"><br>
-//      <label for="description">Description:</label><br>
-//      <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
-//      <input type="submit" id="submitButton" value="Submit">
-//      </form>`});
-//   infoWindow.open(map, marker);
-//   console.log(infoWindow.content);
-// });
-//     infoWindow.open(map, marker);
-//     console.log(infoWindow.content);
-//   });
 
-//   const queryString = `INSERT INTO markers (latitude, longitude) VALUES ($1, $2) RETURNING *;`;
-//   const values = [location.latitude, location.longitude];
-//   return pool
-//     .query(queryString, values)
-//     .then((result) => {
-//       marker.id = result.rows[0].id;
-//       return result.rows[0];
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//     })
-// }
+function addMarker(position, map) {
+  let marker = new google.maps.Marker({
+    id: gmarkers.length + 1,
+    position: position,
+    map: map
+  });
+  map.panTo(position);
+  marker.addListener('dblclick', function() {
+    let infoWindow = new google.maps.InfoWindow({
+      id: gmarkers.length + 1,
+      content: `
+      <div class='marker_window'>
+      <div>${gmarkers.length + 1}</div>
+      <div><strong></strong></div>
+      <div></div>
+      <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
+      <button id="editButton" data-id="' + marker.id + '">EDIT</button>
 
-// function deleteMarker(id) {
-//   for (let marker of gmarkers) {
-//     if (id === marker.id) {
-//       marker.setMap(null);
-//       const queryString = `DELETE FROM markers WHERE markers.id = $1;`;
-//       const values = [id];
-//       return pool
-//         .query(queryString, values)
-//         .then(res => {
-//           return;
-//         })
-//         .catch(err => {
-//           console.log(err.message);
-//         });
-//     }
+      </div>
+      <form>
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" placeholder="Input changes"><br>
+      <label for="description">Description:</label><br>
+      <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
+      </form>`,
+    });
+    infoWindow.open(map, marker);
+    gmarkers.push(marker);
+    console.log('gmarkers', gmarkers);
+    google.maps.event.addListener(infoWindow, 'domready', function() {
+      const someButton = document.getElementById('deleteButton');
+      someButton.addEventListener('click', function() {
+        deleteMarker(infoWindow.id);
+      });
+    });
+    google.maps.event.addListener(infoWindow, 'domready', function() {
+      const someButton = document.getElementById('editButton');
+      someButton.addEventListener('click', function() {
+        editMarker(infoWindow);
+      });
+    });
+  });
+  // fetch(`http://localhost:8080/${marker.position}/${map.id}/addMarker`)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('data', data);
+  //   });
+  // const queryString = `INSERT INTO markers (latitude, longitude) VALUES ($1, $2) RETURNING *;`;
+  // const values = [position.latitude, position.longitude];
+  // return pool
+  //   .query(queryString, values)
+  //   .then((result) => {
+  //     marker.id = result.rows[0].id;
+  //     return result.rows[0];
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.message);
+  //   });
+}
+
+function deleteMarker(id) {
+  for (let marker of gmarkers) {
+    if (marker.id === id) {
+      console.log("found it at", marker.id);
+      marker.setMap(null);
+      fetch(`http://localhost:8080/${marker.id}/deleteMarker`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('data', data);
+        });
+    }
+  }
+}
+
+function editMarker(window) {
+  console.log("window id", window.id);
+  let title = document.getElementById('title').value;
+  let description = document.getElementById('description').value;
+  window.setContent(`
+  <div class='marker_window'>
+  <div>${window.id}</div>
+  <div><strong>${title}</strong></div>
+  <div>${description}<div>
+  <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
+  <button id="editButton" data-id="' + marker.id + '">EDIT</button>
+
+  </div>
+  <form>
+  <label for="title">Title:</label><br>
+  <input type="text" id="title" name="title" placeholder="Input changes"><br>
+  <label for="description">Description:</label><br>
+  <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
+  </form>`);
+}
+//     // const queryString = `UPDATE markers SET title = $1, description = $2 WHERE id = $3;`;
+//     // const values = [title, description, id];
+//     // return pool
+//     //   .query(queryString, values)
+//     //   .then((result) => {
+//     //     return;
+//     //   })
+//     //   .catch((err) => {
+//     //     console.log(err.message);
+//     //   });
 //   }
 // }
-
-// function editMarker(id) {
-//   for (let marker of gmarkers) {
-//     if (id === marker.id) {
-//       let title = document.getElementById('title').value;
-//       let description = document.getElementById('description').value;
-//       marker.content = `${title}\n${description} \n<button id="deleteButton" data-id="' + marker.id + '">Delete</button>
-//       <form action="/">
-//         <label for="title">Title:</label><br>
-//         <input type="text" id="title" name="title" value="Input changes"><br>
-//         <label for="description">Description:</label><br>
-//         <input type="text" id="description" name="description" value="Input changes"><br><br>
-//         <input type="submit" id="submitButton" value="Submit">
-//       </form>`;
-
-//       const queryString = `UPDATE markers SET title = $1, description = $2 WHERE id = $3;`;
-//       const values = [title, description, id];
-//       return pool
-//         .query(queryString, values)
-//         .then((result) => {
-//           return;
-//         })
-//         .catch((err) => {
-//           console.log(err.message);
-//         })
-//     }
-//   }
 // }
