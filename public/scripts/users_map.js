@@ -27,7 +27,7 @@ function initMap() {
         let initialLocation = new google.maps.LatLng(data[0].latitude, data[0].longitude);
         map.setCenter(initialLocation);
         map.setZoom(10);
-
+        console.log(map.map_id);
         data.forEach((element) => {
           let counter = 0;
           let marker = new google.maps.Marker({
@@ -90,16 +90,19 @@ function initMap() {
 
 
 function addMarker(position, map) {
-  let marker = new google.maps.Marker({
-    id: gmarkers.length + 1,
-    position: position,
-    map: map
-  });
-  map.panTo(position);
-  marker.addListener('dblclick', function() {
-    let infoWindow = new google.maps.InfoWindow({
-      id: gmarkers.length + 1,
-      content: `
+  fetch('http://localhost:8080/initmap')
+    .then(response => response.json())
+    .then(data => {
+      let marker = new google.maps.Marker({
+        id: gmarkers.length + 1,
+        position: position,
+        map: map
+      });
+      map.panTo(position);
+      marker.addListener('dblclick', function() {
+        let infoWindow = new google.maps.InfoWindow({
+          id: gmarkers.length + 1,
+          content: `
       <div class='marker_window'>
       <div>${gmarkers.length + 1}</div>
       <div><strong></strong></div>
@@ -114,41 +117,30 @@ function addMarker(position, map) {
       <label for="description">Description:</label><br>
       <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
       </form>`,
-    });
-    infoWindow.open(map, marker);
-    gmarkers.push(marker);
-    console.log('gmarkers', gmarkers);
-    google.maps.event.addListener(infoWindow, 'domready', function() {
-      const someButton = document.getElementById('deleteButton');
-      someButton.addEventListener('click', function() {
-        deleteMarker(infoWindow.id);
+        });
+        infoWindow.open(map, marker);
+        gmarkers.push(marker);
+        console.log('gmarkers', gmarkers);
+        google.maps.event.addListener(infoWindow, 'domready', function() {
+          const someButton = document.getElementById('deleteButton');
+          someButton.addEventListener('click', function() {
+            deleteMarker(infoWindow.id);
+          });
+        });
+        google.maps.event.addListener(infoWindow, 'domready', function() {
+          const someButton = document.getElementById('editButton');
+          someButton.addEventListener('click', function() {
+            editMarker(infoWindow);
+          });
+        });
       });
+      fetch(`http://localhost:8080/${marker.position}/${data[0].map_id}/addMarker`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('data', data);
+        });
     });
-    google.maps.event.addListener(infoWindow, 'domready', function() {
-      const someButton = document.getElementById('editButton');
-      someButton.addEventListener('click', function() {
-        editMarker(infoWindow);
-      });
-    });
-  });
-  // fetch(`http://localhost:8080/${marker.position}/${map.id}/addMarker`)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log('data', data);
-  //   });
-  // const queryString = `INSERT INTO markers (latitude, longitude) VALUES ($1, $2) RETURNING *;`;
-  // const values = [position.latitude, position.longitude];
-  // return pool
-  //   .query(queryString, values)
-  //   .then((result) => {
-  //     marker.id = result.rows[0].id;
-  //     return result.rows[0];
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.message);
-  //   });
 }
-
 function deleteMarker(id) {
   for (let marker of gmarkers) {
     if (marker.id === id) {
