@@ -96,7 +96,7 @@ function addMarker(position, map) {
       map.panTo(position);
       marker.addListener('dblclick', function() {
         let infoWindow = new google.maps.InfoWindow({
-          id: gmarkers.length,
+          id: newMarkerId,
           content: `
       <div class='marker_window'>
       <div><strong>New Marker</strong></div>
