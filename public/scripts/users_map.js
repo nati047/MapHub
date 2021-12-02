@@ -27,7 +27,6 @@ function initMap() {
         let initialLocation = new google.maps.LatLng(data[0].latitude, data[0].longitude);
         map.setCenter(initialLocation);
         map.setZoom(10);
-        console.log(map.map_id);
         data.forEach((element) => {
           let counter = 0;
           let marker = new google.maps.Marker({
@@ -73,17 +72,6 @@ function initMap() {
         map.addListener('click', function(e) {
           addMarker(e.latLng, map);
         });
-
-
-        // });
-
-        // google.maps.event.addListener(infoWindow, 'domready', function() {
-        //   $("#submitButton").click(function() {
-        //     editMarker($(this).data('id'));
-        //   });
-
-        // });
-
       });
     });
 }
@@ -157,11 +145,12 @@ function deleteMarker(id) {
 
 function editMarker(window) {
   console.log("window id", window.id);
+  let marker_id = window.id;
   let title = document.getElementById('title').value;
   let description = document.getElementById('description').value;
   window.setContent(`
   <div class='marker_window'>
-  <div>${window.id}</div>
+  <div>${marker_id}</div>
   <div><strong>${title}</strong></div>
   <div>${description}<div>
   <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
@@ -174,6 +163,11 @@ function editMarker(window) {
   <label for="description">Description:</label><br>
   <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
   </form>`);
+  fetch(`http://localhost:8080/${marker_id}/${title}/${description}/editMarker`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('data', data);
+    });
 }
 //     // const queryString = `UPDATE markers SET title = $1, description = $2 WHERE id = $3;`;
 //     // const values = [title, description, id];
