@@ -217,7 +217,7 @@ app.post('/:id/create', (req, res) => { // takes user inputs and adds a new map 
 
 });
 
-let mapId = 0;  // since the api callback can't take a parameter we need to grab mapid from request url
+let mapId = 0;  // since the api callback can't take a parameter we need to grab mapid from request's url
 // store it in a global variable and pass the variable to another route
 app.get('/selected_map/:id', (req, res) => {
   const templateVars = {map_id: req.params.id};

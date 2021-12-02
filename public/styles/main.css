@@ -17,12 +17,12 @@ button {
 
 /* Popular maps title css */
 #title {
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   flex-direction: column;
-
 }
 
 /* CSS FOR content of map posting */
@@ -76,18 +76,5 @@ img{
 }
 
 
-
-/* CSS FOR NAV LINKS */
-/* a:link {
-  color: black;
-  background-color: transparent;
-  text-decoration: underline;
-} */
-
-/* a:visited {
-  color: black;
-  background-color: transparent;
-  text-decoration: none;
-} */
 
 
