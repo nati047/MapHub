@@ -36,8 +36,7 @@ function initMap() {
         content: `<button>Add Content</button> `
       });
       infoWindow.open(map, marker);
-      console.log(infoWindow.content);
-    });
+      });
   }
 
 }

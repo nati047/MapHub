@@ -22,7 +22,7 @@ function initMap2() {
               });
               marker.addListener('dblclick', function () {
                 let infoWindow = new google.maps.InfoWindow({
-                  content: element.title
+                  content: `<h1>${element.title}</h1>  <h6>${element.description}</h6>`
                 });
                 infoWindow.open(map, marker);
                 console.log(infoWindow.content);
