@@ -27,10 +27,10 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/styles",sassMiddleware({
-    source: __dirname + "/styles",
-    destination: __dirname + "/public/styles",
-    isSass: false, // false => scss, true => sass
-  })
+  source: __dirname + "/styles",
+  destination: __dirname + "/public/styles",
+  isSass: false, // false => scss, true => sass
+})
 );
 
 //renders css from public folder
@@ -57,9 +57,7 @@ app.get("/", (req, res) => {
     SELECT maps.*, users.username FROM maps
     JOIN users ON users.id = maps.creator_id;
   `).then(result => {
-    // console.log('query successful');
     templateVars.maps = result.rows;
-    console.log(templateVars);
     res.render('index', templateVars);
   })
     .catch(err => {
@@ -94,21 +92,18 @@ app.get("/:id/users", (req,res) => {
       console.log('query successful', result.rows);
       templateVars.userName = result.rows[0].username;
       templateVars.mapName = result.rows[0].mapname;
-      db.query(`    SELECT maps.mapname as favourite_maps
+      db.query(`SELECT maps.mapname as favourite_maps
       FROM maps
       JOIN favourites ON maps.id = saved_from_map_id
-      WHERE saved_to_user_id = 1;`)
+      WHERE favourites.saved_to_user_id = 1;`)
         .then(result => {
-          console.log('second query', result.rows);
           templateVars.favouriteMaps = result.rows;
-          console.log('templateVars after second query',templateVars);
           db.query(` SELECT maps.mapname as collaborated_maps
       FROM maps
       JOIN collaborated ON maps.id = map_id
       WHERE user_id = 1;`)
             .then(result => {
               templateVars.collaboratedMaps = result.rows;
-              console.log('templatevars after third', templateVars);
               res.render('users', templateVars);
             });
         });
@@ -124,10 +119,9 @@ app.get('/initmap', (req, res)=> {
   db.query(`SELECT maps.id as map_id, maps.latitude, maps.longitude, markers.id as marker_id, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as content, markers.id as id
   FROM maps
   JOIN markers ON map_id = maps.id
-  WHERE maps.id = markers.map_id `
+  WHERE maps.id = 1`
   )
     .then(result => {
-      console.log("query result", result.rows);
       res.json(result.rows);
     });
 });
@@ -140,7 +134,6 @@ app.get('/initmap/:id', (req, res)=> {
   WHERE creator_id = 1 `
   )
     .then(result => {
-      // console.log("query result", result.rows);
       res.json(result.rows);
     });
 });
@@ -148,11 +141,9 @@ app.get('/initmap/:id', (req, res)=> {
 // END POINT TO GET THE ID OF THE MAP USING IT'S NAME AND THEN INSERTS IT INTO THE USER'S FAVOURITES
 app.get('/:id/addToFavourites', (req,res) => {
   let element = req.params.id;
-  console.log(element);
   db.query(`SELECT id, mapname FROM maps
   WHERE id = $1`, [element])
     .then(result => {
-      console.log("query result", result.rows[0].id);
       let map_id = result.rows[0].id;
       db.query(`
       DELETE FROM favourites
@@ -161,22 +152,19 @@ app.get('/:id/addToFavourites', (req,res) => {
         .then(result => {
           db.query(`INSERT INTO favourites (saved_to_user_id, saved_from_map_id)
         VALUES (1, $1);`,[map_id]);
-          console.log('map_id:',map_id);
         });
       res.json(result.rows);
     })
     .catch(err =>{
-      console.log('query failed - you already have this map in your favourites',err);
+      console.log('querry not successfull',err);
     });
 });
 // END POINT TO REMOVE MAP FROM USER'S FAVOURITES
 app.get('/:id/removeFromFavourites', (req,res) => {
   let element = req.params.id;
-  console.log(element);
   db.query(`SELECT id, mapname FROM maps
   WHERE id = $1`, [element])
     .then(result => {
-      console.log("query result", result.rows[0].id);
       let map_id = result.rows[0].id;
       db.query(`
       DELETE FROM favourites
@@ -199,13 +187,11 @@ app.get('/:id/create', (req, res) => { // render a map create page
 });
 
 app.post('/:id/create', (req, res) => { // takes user inputs and adds a new map to the maps database
-  console.log('request body ****************\n', req.body);
   db.query(`
   INSERT INTO maps (creator_id, mapname, description, image_url, latitude, longitude)
   VALUES (1, $1 , $2 , $3 , $4, $5)
   `, [req.body.name, req.body.description, req.body.image_url, req.body.latitude, req.body.longitude])
     .then(result =>{
-      console.log('done');
       res.redirect('/');
     })
     .catch(err =>{
@@ -228,7 +214,6 @@ app.get('/selected_map/:id', (req, res) => {
       templateVars.mapName = result.rows[0].mapname;
       templateVars.mapDescription = result.rows[0].description;
       templateVars.imageUrl = result.rows[0].image_url;
-      console.log("templateVars", result.rows);
       res.render('selected_map', templateVars);
     })
     .catch(err =>{
@@ -238,20 +223,17 @@ app.get('/selected_map/:id', (req, res) => {
 });
 
 app.get('/getMapId', (req, res) => {
-  console.log(mapId, 'map id is ******\n');
   res.json(mapId);
 });
 
 app.get('/initmap2/:id', (req, res)=> {  // queries the databse for map information based on it's map id
   const map_id = req.params.id;
-  console.log("map id sent through fetch ", map_id);
   db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as description
   FROM maps
   LEFT JOIN markers ON map_id = maps.id
   WHERE maps.id = $1`, [map_id]
   )
     .then(result => {
-      console.log("query result", result.rows);
       res.json(result.rows);
     })
     .catch(err => {
@@ -269,17 +251,14 @@ app.get('/:id/:map_id/addMarker', (req,res) => {
   db.query(`INSERT INTO markers (map_id, markername, latitude, longitude)
             VALUES ($1, $2, $3, $4)`, [map_id, markername, latitude, longitude])
     .then(result => {
-      console.log(`added marker to map with id of ${map_id} at latitude: ${latitude} and longitude: ${longitude}`);
       res.json(result.rows);
     });
 });
 
 app.get('/:id/deleteMarker', (req,res) => {
   const marker_id = req.params.id;
-  console.log("map id sent through fetch", marker_id);
   db.query(`DELETE FROM markers WHERE markers.id = $1`, [marker_id])
     .then(result => {
-      console.log(`removed marker ${marker_id} from database`);
       res.json(result.rows);
     });
 });

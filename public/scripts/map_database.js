@@ -12,24 +12,6 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-// const getMapLocationWithId = (id) => {
-//   const queryString = `SELECT latlng FROM maps WHERE id = $1;`;
-//   const queryParams = [id];
-//   return pool
-//     .query(queryString, queryParams)
-//     .then((result) => {
-//       console.log(result.rows);
-//       if (!result) {
-//         return null;
-//       } else {
-//         return result.rows[0];
-//       }
-//     })
-//     .catch((err) => console.error(err.message));
-// };
-// getMapLocationWithId(1);
-
-
 function initMap() {
   //CREATES MAP OBJECT ON PAGE LOAD
   const map = new google.maps.Map(document.getElementById("map"));
@@ -70,7 +52,6 @@ function initMap() {
         content: `<button>Add Content</button> `
       });
       infoWindow.open(map, marker);
-      console.log(infoWindow.content);
     });
   }
 

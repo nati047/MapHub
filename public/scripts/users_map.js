@@ -120,10 +120,7 @@ function addMarker(position, map) {
         });
       });
       fetch(`http://localhost:8080/${marker.position}/${data[0].map_id}/addMarker`)
-        .then(response => response.json())
-        .then(data => {
-          console.log('data', data);
-        });
+        .then(response => response.json());
     });
 }
 
@@ -132,10 +129,7 @@ function deleteMarker(id) {
     if (marker.id === id) {
       marker.setMap(null);
       fetch(`http://localhost:8080/${marker.id}/deleteMarker`)
-        .then(response => response.json())
-        .then(data => {
-          console.log('data', data);
-        });
+        .then(response => response.json());
       gmarkers.splice(gmarkers.indexOf(marker), 1);
     }
   }
@@ -150,18 +144,15 @@ function editMarker(window) {
   <div><strong>${title}</strong></div>
   <div>${description}<div>
   <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
-  <button id="editButton" data-id="' + marker.id + '">EDIT</button>
-
   </div>
   <form>
   <label for="title">Title:</label><br>
   <input type="text" id="title" name="title" placeholder="Input changes"><br>
   <label for="description">Description:</label><br>
   <input type="text" id="description" name="description" placeholder="Input Changes"><br><br>
-  </form>`);
+  </form>
+  <button id="editButton" data-id="' + marker.id + '">EDIT</button>
+  `);
   fetch(`http://localhost:8080/${marker_id}/${title}/${description}/editMarker`)
-    .then(response => response.json())
-    .then(data => {
-      console.log('data', data);
-    });
+    .then(response => response.json());
 }

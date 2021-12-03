@@ -22,7 +22,6 @@ function initMap() {
         content: `<h1>Sas wuz here</h1> `
       });
       infoWindow.open(map, marker);
-      console.log(infoWindow.content);
     });
   }
 
@@ -58,7 +57,6 @@ function initMap() {
         content: `<button>Add Content</button> `
       });
       infoWindow.open(map, marker);
-      console.log(infoWindow.content);
     });
   }
 

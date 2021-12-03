@@ -3,13 +3,11 @@ function initMap2() {
     .then(response => response.json())
     .then(data => {
       let mapid = data;
-      console.log('map id sent as param \n ****', mapid)
 
        // sends map id through the url inorder to get map data corresponding to the map id
       fetch(`/initmap2/${mapid}`)
         .then(response => response.json())
         .then(data => {
-          console.log('data feted, \n', data[0])
           const map = new google.maps.Map(document.getElementById("map"));
           navigator.geolocation.getCurrentPosition(function (position) {
             let initialLocation = new google.maps.LatLng(data[0].latitude, data[0].longitude);
@@ -25,7 +23,6 @@ function initMap2() {
                   content: `<h1>${element.title}</h1>  <h6>${element.description}</h6>`
                 });
                 infoWindow.open(map, marker);
-                console.log(infoWindow.content);
               });
 
             });

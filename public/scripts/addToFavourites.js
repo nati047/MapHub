@@ -12,7 +12,6 @@ $(document).ready(function() {
     fetch(`http://localhost:8080/${element}/addToFavourites`)
       .then(response => response.json())
       .then(data => {
-        console.log('data', data);
         alert(`Added ${data[0].mapname} to your favourites!`);
       });
   }
@@ -21,7 +20,6 @@ $(document).ready(function() {
     fetch(`http://localhost:8080/${element}/removeFromFavourites`)
       .then(response => response.json())
       .then(data => {
-        console.log('data', data);
         alert(`Removed ${data[0].mapname} from your favourites!`);
       });
 
