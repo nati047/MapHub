@@ -34,6 +34,8 @@ function initMap() {
               <div><strong>${element.title}</strong></div>
               <div>${element.content}<div>
               <div><p></p></div>
+              <div><img src="https://www.nicepng.com/png/detail/149-1497884_bigfoot-png.png" width="110" height="110"></div>
+              <div><p></p></div>
               <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
               </div>
               <form>
@@ -94,6 +96,8 @@ function addMarker(position, map) {
       <div></div>
       <div><p></p></div>
       <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
+      <div><img src="https://www.nicepng.com/png/detail/149-1497884_bigfoot-png.png" width="110" height="110"></div>
+
       </div>
       <form>
       <div><p></p></div>
@@ -143,8 +147,13 @@ function editMarker(window) {
   <div class='marker_window'>
   <div><strong>${title}</strong></div>
   <div>${description}<div>
+  <div><p></p></div>
   <button id="deleteButton" data-id="' + marker.id + '">Delete Marker</button>
+  <div><img src="https://www.nicepng.com/png/detail/149-1497884_bigfoot-png.png" width="110" height="110"></div>
+
   </div>
+  <div><p></p></div>
+
   <form>
   <label for="title">Title:</label><br>
   <input type="text" id="title" name="title" placeholder="Input changes"><br>
@@ -154,5 +163,8 @@ function editMarker(window) {
   <button id="editButton" data-id="' + marker.id + '">EDIT</button>
   `);
   fetch(`http://localhost:8080/${marker_id}/${title}/${description}/editMarker`)
-    .then(response => response.json());
+    .then(response => response.json())
+    .then(data => {
+      console.log('data', data);
+    });
 }
