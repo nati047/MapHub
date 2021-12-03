@@ -126,7 +126,7 @@ app.get('/initmap', (req, res)=> {
   db.query(`SELECT maps.id as map_id, maps.latitude, maps.longitude, markers.id as marker_id, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as content, markers.id as id
   FROM maps
   JOIN markers ON map_id = maps.id
-  WHERE creator_id = 1 `
+  WHERE maps.id = markers.map_id `
   )
     .then(result => {
       console.log("query result", result.rows);
