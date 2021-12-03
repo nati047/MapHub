@@ -26,9 +26,7 @@ app.use(morgan("dev"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  "/styles",
-  sassMiddleware({
+app.use("/styles",sassMiddleware({
     source: __dirname + "/styles",
     destination: __dirname + "/public/styles",
     isSass: false, // false => scss, true => sass
@@ -61,7 +59,7 @@ app.get("/", (req, res) => {
   `).then(result => {
     // console.log('query successful');
     templateVars.maps = result.rows;
-    // console.log(templateVars);
+    console.log(templateVars);
     res.render('index', templateVars);
   })
     .catch(err => {
@@ -247,7 +245,7 @@ app.get('/getMapId', (req, res) => {
 app.get('/initmap2/:id', (req, res)=> {  // queries the databse for map information based on it's map id
   const map_id = req.params.id;
   console.log("map id sent through fetch ", map_id);
-  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title
+  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as description
   FROM maps
   LEFT JOIN markers ON map_id = maps.id
   WHERE maps.id = $1`, [map_id]
