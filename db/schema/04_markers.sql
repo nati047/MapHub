@@ -5,7 +5,7 @@ CREATE TABLE markers (
   map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE,
   markername VARCHAR(255),
   description TEXT DEFAULT 'Enter a description',
-  picture_url VARCHAR(255) DEFAULT 'Enter a url',
+  picture_url VARCHAR(255),
   latitude VARCHAR(255) NOT NULL,
   longitude VARCHAR(255) NOT NULL
 );

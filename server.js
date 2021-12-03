@@ -228,7 +228,7 @@ app.get('/getMapId', (req, res) => {
 
 app.get('/initmap2/:id', (req, res)=> {  // queries the databse for map information based on it's map id
   const map_id = req.params.id;
-  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as description
+  db.query(`SELECT maps.latitude, maps.longitude, markers.latitude as marker_lat, markers.longitude as marker_long, markers.markername as title, markers.description as description, markers.picture_url as image
   FROM maps
   LEFT JOIN markers ON map_id = maps.id
   WHERE maps.id = $1`, [map_id]
